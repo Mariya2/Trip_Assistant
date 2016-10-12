@@ -1,0 +1,33 @@
+<div class="login container login-form">
+	<div class="row">
+ 		<h2 class="active"><a ng-href="#/homePage/login"> sign in </a></h2>
+
+  		<h2 class="nonactive"><a ng-href="#/homePage/signUp">  sign up </a></h2>
+ 		<form  name="loginForm" method="POST" ng-submit="loginForm.$valid && login(sendAjax)" novalidate>
+    		<input type="text" class="text" name="username" required minlength="4" maxlength="24" ng-model="user.name">
+    		<span>Username</span>
+    		<br>
+    
+   			<br>
+  			<input type="password" class="text" name="password"  required minlength="6" maxlength="24" ng-model="user.password">
+   			<span>password</span>
+    		<br>
+
+    		<button class="signin" type="submit">
+     				 Sign In
+    		</button>
+    			
+  			  <hr>
+
+    		<a ng-href="#/homePage/:id/edit">Forgot Password?</a>
+  			<a ng-href="#/homePage/signUp">Sign Up?</a>
+  		</form>
+	</div>
+</div>
+<!-- <div ng-if="isLogged">
+        you are logged in
+    </div>
+    <div ng-if="failCount">
+        failed attempts {{failCount}}
+    </div>
+</div> -->

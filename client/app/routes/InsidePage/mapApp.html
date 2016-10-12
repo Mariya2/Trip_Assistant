@@ -1,0 +1,57 @@
+<div id="insidePage">
+	<input id="pac-input" class="controls" type="text" placeholder="Type another city" ng-change="changeInput()"  ng-model="newCity" ng-trim="true">
+	
+	
+	
+	<div id="floating-panel">
+	
+	<div id="selection-panel">
+	<form name="myForm" ng-click = "selectionClick()">
+		<label>Select Points of Interest: </label><br/>
+		<label>place of worship
+    		<input type="checkbox" ng-model="selectedAttractions.place_of_worship"  ng-change="changeSelectAttr()">
+  		</label><br/>
+		<label>museum
+    		<input type="checkbox" ng-model="selectedAttractions.museum"  ng-change="changeSelectAttr()">
+  		</label><br/>
+		<label>amusement park
+    		<input type="checkbox" ng-model="selectedAttractions.amusement_park"  ng-change="changeSelectAttr()">
+  		</label><br/>
+		<label>art gallery
+    		<input type="checkbox" ng-model="selectedAttractions.art_gallery"  ng-change="changeSelectAttr()">
+  		</label><br/>
+		<button ng-click="showPlaces()">Show Places</button>
+		
+		
+		
+		<label for="startSelect"> Start Point </label>
+		 
+		<select name="startSelect" id="startSelect" ng-model="selectedOptionStart" ng-change="changeSelectStart()"> 
+		   <option value="">-Select Start-</option>
+		    <option ng-repeat="option in data track by option.id" ng-value="option.position" selected="selectedOptionStart == option.position"  >
+		    	{{option.name}}
+		    </option>
+		</select> 
+		<label for="endSelect"> End Point </label>
+		 
+		<select name="endSelect" id="endSelect" ng-model="selectedOptionEnd" ng-change="changeSelectEnd()"> 
+		   <option value="">-Select End-</option>
+		    <option ng-repeat="option in data track by option.id" ng-value="option.position" selected="selectedOptionEnd == option.position"  >
+		    {{option.name}}
+		    </option>
+		</select> 
+	</form>
+	<!-- ng-click="calcTimeAndLength()" -->
+	<div > 
+		<button ng-click="calcRoute()" ng-click="totalTimeMinutes ()" ng-click="totalRouteKm ()">Calculate Route</button>
+		 <span ng-model="totalTimeMinutes">Time Length: {{totalTimeMinutes()}} </span>
+		 <span ng-model="totalRouteKm">Route Length: {{totalRouteKm()}}</span>
+	</div>
+	<button ng-click="saveRoute()">Save Route</button>
+	</div>
+	
+	<!-- <tt>model = {{selectedOptionEnd}}</tt><br/> -->
+	</div>
+	<div class="map" id="map">{{'map'}}</div>
+</div>
+

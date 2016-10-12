@@ -1,0 +1,270 @@
+@font-face {
+  font-family: Ailerons-Typeface;
+  src: url(Ailerons-Typeface.otf); }
+@font-face {
+  font-family: Nexa-Light;
+  src: url(Nexa-Light.otf); }
+body {
+  background: #1531ae; }
+
+a {
+  text-align: center;
+  position: relative;
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.2); }
+
+.signin {
+  background-color: #1531ae;
+  font-family: 'Montserrat', sans-serif;
+  color: #fff;
+  font-size: 14px;
+  letter-spacing: 1px; }
+
+.center {
+  margin: 0 auto; }
+
+.login {
+  position: relative;
+  height: 560px;
+  width: 405px;
+  margin: auto;
+  padding: 40px 50px;
+  background: url(http://mikeyoungweb.com/img/bg4.jpg) no-repeat center center #505050;
+  background-size: cover;
+  box-shadow: 0px 30px 60px -5px #000; }
+  .login h2 {
+    padding-left: 12px;
+    font-size: 22px;
+    text-transform: uppercase;
+    padding-bottom: 5px;
+    letter-spacing: 2px;
+    display: inline-block;
+    font-weight: 100; }
+    .login h2.active {
+      border-bottom: 2px solid #1161ed; }
+    .login h2.nonactive {
+      color: rgba(255, 255, 255, 0.2); }
+    .login h2:first-child {
+      padding-left: 0px; }
+    .login h2 > a {
+      text-decoration: none; }
+  .login p {
+    color: white; }
+  .login form {
+    padding-top: 30px; }
+    .login form span {
+      color: rgba(255, 255, 255, 0.2);
+      text-transform: uppercase;
+      font-size: 12px;
+      opacity: 0.4;
+      display: inline-block;
+      position: relative;
+      top: -50px;
+      transition: all 0.5s ease-in-out; }
+    .login form .text {
+      border: none;
+      width: 89%;
+      padding: 10px 20px;
+      display: block;
+      height: 15px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 2px solid rgba(255, 255, 255, 0);
+      overflow: hidden;
+      margin-top: 5px;
+      transition: all 0.5s ease-in-out; }
+      .login form .text:focus {
+        outline: 0;
+        border: 2px solid rgba(255, 255, 255, 0.5);
+        border-radius: 20px;
+        background: transparent; }
+        .login form .text:focus + span {
+          opacity: 0.6; }
+
+.login-form {
+  height: 450px; }
+
+input[type="text"],
+input[type="password"] {
+  font-family: 'Montserrat', sans-serif;
+  color: #fff; }
+
+input {
+  display: inline-block;
+  padding-top: 10px;
+  font-size: 14px; }
+
+h2,
+span,
+.custom-checkbox {
+  margin-left: 20px; }
+
+label {
+  display: inline-block;
+  padding-top: 10px;
+  padding-left: 5px; }
+
+.signin {
+  background-color: #1161ed;
+  color: #FFF;
+  width: 100%;
+  padding: 10px 20px;
+  display: block;
+  height: 39px;
+  border-radius: 20px;
+  margin-top: 20px;
+  transition: all 0.5s ease-in-out;
+  border: none;
+  text-transform: uppercase; }
+
+.signin:hover {
+  background: #4082f5;
+  box-shadow: 0px 4px 35px -5px #4082f5;
+  cursor: pointer; }
+
+.signin:focus {
+  outline: none; }
+
+hr {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  top: 50px;
+  position: relative; }
+
+/* section form */
+.button {
+  padding: 2em 0;
+  display: inline-block;
+  margin-left: 33%; }
+
+.btn {
+  text-align: center;
+  border: 1px solid white;
+  color: white;
+  border-radius: 3em;
+  background: transparent;
+  padding: 2em;
+  width: 240px; }
+
+#form {
+  background: url("../assets/img/dqhNDH.jpg") no-repeat;
+  background-size: 100%;
+  width: 70%;
+  margin: 0 auto;
+  padding: 1em; }
+  #form h2 {
+    font-size: 2.7em;
+    color: #394fb3;
+    font-weight: bold;
+    text-align: center; }
+  #form .line1 {
+    display: inline-block;
+    padding: 2.5em 1.5em 0 0;
+    border-bottom: 1px solid #394fb3;
+    margin: 2em;
+    width: 40%;
+    position: relative; }
+    #form .line1:nth-child(3) {
+      width: 90%; }
+    #form .line1 label {
+      font-size: 1.3em;
+      color: #394fb3;
+      text-align: left;
+      position: absolute;
+      padding-bottom: 3em; }
+    #form .line1 input, #form .line1 textarea {
+      border: none;
+      background-color: transparent;
+      font-size: 1.4em;
+      padding: 0.3em;
+      color: gray;
+      width: 100%; }
+
+@media all and (max-width: 900px) {
+  #form .line1 {
+    display: block;
+    width: 90%;
+    text-align: left; } }
+@media screen and (max-width: 500px) {
+  #form {
+    padding: 1em; }
+    #form h2 {
+      font-size: 1.6em;
+      padding: 1em; }
+    #form .line1 {
+      margin: 0.7em;
+      display: block;
+      width: 90%;
+      text-align: left; }
+      #form .line1 label {
+        font-size: 1em;
+        padding: 1em; } }
+/* end section form */
+/* footer */
+footer {
+  margin-top: 60px;
+  background: #394fb3;
+  padding-bottom: 0.5em; }
+  footer #icons, footer p {
+    display: inline-block;
+    font-size: 0.9;
+    padding: 1em;
+    color: gray; }
+    footer #icons a i, footer p a i {
+      font-size: 1.3em;
+      color: gray; }
+
+.bold {
+  font-weight: bold;
+  color: white; }
+
+a[href="#movies"] {
+  display: block;
+  font-size: 1.8rem;
+  color: white;
+  margin-left: 20px; }
+
+#contacts {
+  z-index: 10;
+  width: 100px;
+  color: white;
+  position: fixed;
+  bottom: 30px;
+  right: 40px; }
+  #contacts a {
+    color: white;
+    text-align: left;
+    font-size: 3em; }
+    #contacts a i {
+      margin-left: 50px; }
+
+/*tablet*/
+@media all and (max-width: 900px) {
+  footer {
+    padding: 1.5em; }
+    footer p {
+      display: block;
+      margin: 0;
+      padding: 0.1em; }
+    footer #icons, footer p {
+      padding: 0.2em;
+      font-size: 0.9em; } }
+/*mobile*/
+@media screen and (max-width: 500px) {
+  footer {
+    padding: 1em;
+    padding-bottom: 1em; }
+    footer div#icons {
+      display: block;
+      margin: 0 auto;
+      text-align: center; }
+    footer p {
+      text-align: center;
+      font-size: 0.7em;
+      margin: 5px; }
+      footer p.bold {
+        font-weight: bold; }
+    footer #contacts {
+      display: none; } }
+/* end footer */
+
+/*# sourceMappingURL=style.css.map */

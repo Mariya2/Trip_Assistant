@@ -1,0 +1,53 @@
+<div class="login container">
+	<div class="row">
+ 		 <h2 class="nonactive"><a ng-href="#/homePage/login"> sign in </a></h2>
+
+  		<h2 class="active"><a ng-href="#/homePage/signUp"> sign up </a></h2>
+ 			<form name="signUpForm" ng-submit="signUpForm.$valid && register(registerUser)" novalidate>
+    			<input type="text" ng-model="newUser.name" class="text" name="username" required minlength="4" maxlength="24">
+    			<span>Username</span>
+    			
+    			
+    			
+    			<!-- <div *ngIf="name.errors && (name.dirty || name.touched)"
+			     class="alert alert-danger">
+			    <div [hidden]="!name.errors.required">
+			      Name is required
+			    </div>
+			    <div [hidden]="!name.errors.minlength">
+			      Name must be at least 4 characters long.
+			    </div>
+			    <div [hidden]="!name.errors.maxlength">
+			      Name cannot be more than 24 characters long.
+			    </div>
+			    </div>
+ -->    
+    			<br>
+    
+    
+    
+    			<br>
+  				<input type="password" class="text" name="password" required min-length="6" max-length="24" ng-model="newUser.password">
+   				<span>password</span>
+    			<br>
+    			<br>
+  				<input type="password" class="text" name="passRepeat" required min-length="6" max-length="24" ng-model="newUser.passRepeat">
+   				<span>repeat password</span>
+    			<br>
+    			<br>
+  				<input type="e-mail" class="text" name="e-mail" required ng-model="newUser.email">
+   				<span>e-mail</span>
+    			
+
+    			<button class="signin" type="submit"  ng-disabled="signUpForm.$invalid || newUser.password != newUser.passRepeat">
+     				 Sign Up
+    			</button>
+    			
+  		</form>
+  			  <hr>
+			<div>
+    		<a ng-href="#/homePage/:id/edit" class="inline">Forgot Password?</a>
+  			<a ng-href="#/homePage/login" class="inline">Sign In?</a>
+  			</div>
+	</div>
+</div>

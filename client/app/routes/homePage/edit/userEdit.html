@@ -1,0 +1,43 @@
+<div class="login container">
+	<div class="row">
+ 		<h2 class="nonactive"><a ng-href="#/homePage/login"> sign in </a></h2>
+
+  		<h2 class="nonactive"><a ng-href="#/homePage/signUp">  sign up </a></h2>
+  		
+  		<p>Forgot your account's password? 
+  		<br>Enter your username and new password.</p>
+ 		<form name="editForm" action="some.php" method="POST" ng-submit="editForm.$valid && makeNewPass(user)" novalidate>
+    		<input type="text" class="text" name="username" required minlength="4" maxlength="24" ng-model="user.name">
+    		<span>Username</span>
+    		<br>
+    
+   			<!-- <br>
+  			<input type="e-mail" class="text" name="e-mail"  ng-model="user.email">
+   			<span>e-mail</span>
+    		<br> -->
+    		<br>
+  				<input type="password" class="text" name="password" required minlength="6" maxlength="24" ng-model="user.password">
+   				<span>new password</span>
+    		<br>
+    		<br>
+  				<input type="password" class="text" name="password" required minlength="6" maxlength="24" ng-model="user.passRepeat">
+   				<span>repeat new password</span>
+    		<br>
+
+    		<button class="signin" type="submit" ng-click="makeNewPass()">
+     				 Update Account
+    		</button>
+    			<br>
+  			  <hr>
+
+  			<a ng-href="#/homePage/login">Sign In?</a>
+  		</form>
+	</div>
+</div>
+<!-- <div ng-if="isLogged">
+        you are logged in
+    </div>
+    <div ng-if="failCount">
+        failed attempts {{failCount}}
+    </div>
+</div> -->
