@@ -1,7 +1,6 @@
 {
   "name": "tripproject",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "dependencies": {
     "angular": "^1.5.8",
@@ -24,5 +23,6 @@
     "gulp": "gulp"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "description": ""
 }

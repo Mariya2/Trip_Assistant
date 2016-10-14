@@ -48,12 +48,22 @@ var travelAssistant = angular.module('travelAssistant',['ngRoute'
     }])
 .controller('PageController', function($rootScope, $scope, $cookies, authentication, identity) {
 	/*$scope.log = "Log In";*/
+	if(authentication.isAuthenticated()){
+		$liacation.path('/InsidePage/mapApp')
+	}
 	
-		identity.getCurrentUser()
+	
+	$scope.logout = function(){
+		
+	/*	authentication.isAuthenticated = false;*/
+		authentication.logoutUser()
+	}
+		
+	identity.getCurrentUser()
 		.then(function(user){
 	
 			$scope.currentUser = user;
-			$scope.isAuthenticated = true;
+			
 		});
 	
 	

@@ -8,38 +8,35 @@ travelAssistant.factory('authentication', [
             'BASE_URL',
             function($http, $cookies, $q, $location, identity, BASE_URL) {
                 
-                var AUTHENTICATION_COOKIE_KEY = '!__Authentication_Cookie_Key__!';
+     var AUTHENTICATION_COOKIE_KEY = '!__Authentication_Cookie_Key__!';
                 
-                function preserveUserData(data) {
+      function preserveUserData(data) {
                     var accessToken = data.access_token;
                     $http.defaults.headers.common.Authorization = 'Bearer ' + accessToken;
                     $cookies.put(AUTHENTICATION_COOKIE_KEY, accessToken);
-                }
+       }
                 
-                function registerUser(user) {
-            		
+      function registerUser(user) {
             		return $http({
             				url: '../server/insert.php',
             				data: user,
             				method: 'POST',
             				dataType: "json",
             				headers: {'Content-Type': 'application/json'}
-            			}).then(function(response){
-            				 preserveUserData(response.data);
-                             
+            			}).then(function success(response) {
+            				console.log(response);
+            				preserveUserData(response.data);
                              identity.requestUserProfile()
                              
-                             
                              return response;
-            				/*if(data.status == 200) {
-            					alert("success");
-            					
-            				} else {
-            					alert("Not success");
-            				}*/
-            			})
-                }
-                function sendAjax(user) {
+                             
+            			  }, function error(response) {
+            			    response = 'error';
+            			    return response;
+            			  })
+        }
+                
+      function sendAjax(user) {
                 	return $http({
             			url: '../server/login.php',
             			data: user,
@@ -47,68 +44,42 @@ travelAssistant.factory('authentication', [
             			dataType: "json",
             			headers: {'Content-Type': 'application/json'}
             		}).then(function(response){
+            			if(response.success == 'true'){
             			preserveUserData(response.data);
             			identity.requestUserProfile();
             			
             			return response;
+            		} else {
+        			    response = 'error';
+        			    return response;
+            		}
             		});
             		
-            	}
-                /*function registerUser(user) {
-                    var deferred = $q.defer();
-                    
-                    $http.post(BASE_URL + 'Users/Register', user)
-                        .then(function(response) {
-                            preserveUserData(response.data);
-                            
-                            identity.requestUserProfile()
-                                .then(function() {
-                                    deferred.resolve(response.data);
-                                });
-                        });
-                    
-                    return deferred.promise;
-                }
+       }
                 
-                function loginUser(user) {
-                    var deferred = $q.defer();
-                    
-                    $http.post(BASE_URL + 'Users/Login', user)
-                        .then(function(response) {
-                            preserveUserData(response.data);
-                            
-                            identity.requestUserProfile()
-                                .then(function() {
-                                    deferred.resolve(response.data);
-                                });
-                        });
-                        
-                    return deferred.promise;
-                }*/
-                
-                function isAuthenticated() {
+       function isAuthenticated() {
                     return !!$cookies.get(AUTHENTICATION_COOKIE_KEY);
-                }
+       }
                 
-                function logout() {
+       function logoutUser() {
                     $cookies.remove(AUTHENTICATION_COOKIE_KEY);
                     $http.defaults.headers.common.Authorization = undefined;
                     identity.removeUserProfile();
                     $location.path('/homePage');
-                }
+        }
                 
-                function refreshCookie() {
+       function refreshCookie() {
                     if (isAuthenticated()) {
                         $http.defaults.headers.common.Authorization = 'Bearer ' + $cookies.get(AUTHENTICATION_COOKIE_KEY);
                         identity.requestUserProfile();
                     }
-                }
+       }
                 
-                return {
+       return {
                 	registerUser: registerUser,
                     sendAjax: sendAjax,
                     isAuthenticated: isAuthenticated,
                     refreshCookie: refreshCookie,
-                    logout: logout
-                }
-        }])
+                    logoutUser: logoutUser
+       }
+}])

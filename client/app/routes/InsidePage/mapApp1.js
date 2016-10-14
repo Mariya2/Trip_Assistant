@@ -1,8 +1,6 @@
 'use strict';
 
-
-
-travelAssistant.controller('MapCtrl', ['$scope', '$rootScope', function($scope, $rootScope) {
+travelAssistant.controller('MapCtrl', ['$scope', '$rootScope', 'userService', function($scope, $rootScope, userService) {
     
 	if(!!navigator.geolocation) {
 	    
@@ -147,18 +145,33 @@ travelAssistant.controller('MapCtrl', ['$scope', '$rootScope', function($scope, 
 		directionsDisplay.setMap(map);
 		
 		$scope.calcRoute = function(geo, $window) {
-			var start = $scope.selectedOptionStart;;
+			var start = $scope.selectedOptionStart;
+			$scope.start = start;
 			var end1 = $scope.selectedOptionEnd;
+			$scope.end1 = end1;
 			end1 = end1.replace('(', "").replace(')', "");
 			start = start.replace('(', "").replace(')', "");
 			var wayPoints1 = [];
+			
+			
+			
 				for (var int = 0; int < wayPoints.length; int++) {
 					wayPoints1.push({
 					location: (wayPoints[int].position+'').replace('(', "").replace(')', ""),
 					stopover: true
 					});
 				}
-					
+				console.log(wayPoints1)
+				var wayPoints2 = '';
+				for (var int = 0; int < wayPoints1.length-1; int++) {
+					var a = wayPoints1[int].location+', ';
+					a += wayPoints1[int+1].location;
+				}	
+				wayPoints2 = a
+				console.log(wayPoints2)
+				
+				$scope.wayPoints2 = wayPoints2; 
+				
 			var requestRoute = {
 						/*origin: startPosLat1+', '+ startPosLng1,*/
 						origin: start,
@@ -168,13 +181,15 @@ travelAssistant.controller('MapCtrl', ['$scope', '$rootScope', function($scope, 
 						unitSystem: google.maps.UnitSystem.METRIC,
 						travelMode: 'WALKING'
 						};
+		
 			var route = null;
 			directionsService.route(requestRoute, function(result, status) {
+				console.log(requestRoute)
 				if (status == google.maps.DirectionsStatus.OK) {
 					directionsDisplay.setDirections(result);
 					route = result.routes[0];
-					$scope.route = route
-					console.log($scope.route) //save Route Func
+					//$scope.route = route
+					//console.log($scope.route) //save Route Func
 						
 					
 						for (var i = 0; i < route.legs.length; i++) {
@@ -207,14 +222,45 @@ travelAssistant.controller('MapCtrl', ['$scope', '$rootScope', function($scope, 
 		
 		
 		$scope.saveRoute = function() {
-			console.log($scope.route)//Write here the ajax request to save the route to tha DB
+			/*console.log($scope.route)//Write here the ajax request to save the route to tha DB
+*/			
+			
+				var user = '1'/*$scope.user.name*/;
+				$scope.start = $scope.start.replace('(', "").replace(')', "");
+				$scope.end1 = $scope.end1.replace('(', "").replace(')', "");
+				
+				var route = {
+					user: user,
+					origin: $scope.start,
+					destination: $scope.end1,
+					waypoints: $scope.wayPoints2,
+					optimizeWaypoints: true,
+					unitSystem: google.maps.UnitSystem.METRIC,
+					travelMode: 'WALKING'
+				};
+						
+				userService.registerRoute(route)
+				.then(function(response){
+					console.log('success');
+				});
+			
 		}
+		$scope.getAllRoutes = function() {
+			userService.getRoutes()
+			.then(function(response){
+				console.log('success');
+				console.log(response);
+			});
+		}
+		
+		
+		
 		var input = document.getElementById('pac-input');
 		var searchBox = new google.maps.places.SearchBox(input);
 		map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
        
 		$scope.changeInput = function() {
-			console.warn($scope.newCity);
+			//console.warn($scope.newCity);
 		};
 		map.addListener('bounds_changed', function() { // Bias the SearchBox results towards current map's viewport.
 			searchBox.setBounds(map.getBounds());

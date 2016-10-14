@@ -1,32 +1,41 @@
-<div id="insidePage">
-	<input id="pac-input" class="controls" type="text" placeholder="Type another city" ng-change="changeInput()"  ng-model="newCity" ng-trim="true">
-	
-	
-	
+<div id="insidePage" class="container">
+
+
+<div class="row">
+
+<div class="col-md-3">
+
 	<div id="floating-panel">
 	
 	<div id="selection-panel">
 	<form name="myForm" ng-click = "selectionClick()">
-		<label>Select Points of Interest: </label><br/>
-		<label>place of worship
+		<h3>Make a new trip</h3>
+		<br/>
+		<h4>Select points</h4>
+		<label>
     		<input type="checkbox" ng-model="selectedAttractions.place_of_worship"  ng-change="changeSelectAttr()">
-  		</label><br/>
-		<label>museum
+  		place of worship</label>
+  		<br/>
+		<label>
     		<input type="checkbox" ng-model="selectedAttractions.museum"  ng-change="changeSelectAttr()">
-  		</label><br/>
-		<label>amusement park
+  		museum</label>
+  		<br/>
+		<label>
     		<input type="checkbox" ng-model="selectedAttractions.amusement_park"  ng-change="changeSelectAttr()">
-  		</label><br/>
-		<label>art gallery
+  		amusement park</label>
+  		<br/>
+		<label>
     		<input type="checkbox" ng-model="selectedAttractions.art_gallery"  ng-change="changeSelectAttr()">
-  		</label><br/>
-  			<label>poi
+  		art gallery</label>
+  		<br/>
+  		<label>
     		<input type="checkbox" ng-model="selectedAttractions.poi"  ng-change="changeSelectAttr()">
-  		</label><br/>
+  		other</label>
+  		<br/>
 		<button ng-click="showPlaces()">Show Places</button>
 		
 		
-		
+	
 		<label for="startSelect"> Start Point </label>
 		 
 		<select name="startSelect" id="startSelect" ng-model="selectedOptionStart" ng-change="changeSelectStart()"  > 
@@ -45,16 +54,51 @@
 		</select> 
 	</form>
 	<!-- ng-click="calcTimeAndLength()" -->
+
 	<div > 
-		<button ng-click="calcRoute()" ng-click="totalTimeMinutes ()" ng-click="totalRouteKm ()">Calculate Route</button>
+		<button ng-click="calcRoute()" ng-click="totalTimeMinutes()" ng-click="totalRouteKm()">See trip</button>
 		 <span ng-model="totalTimeMinutes">Time Length: {{totalTimeMinutes()}} </span>
 		 <span ng-model="totalRouteKm">Route Length: {{totalRouteKm()}}</span>
 	</div>
-	<button ng-click="saveRoute()">Save Route</button>
+	<div><label>Comment
+		<textarea placeholder="make a comment"></textarea>
+		</label>
+	</div>
+	<div>
+		<label>Rate the trip
+			<select name="rating" id="rating">
+				<option ng-model="selectedRating.one"  ng-change="changeRating()">1</option>
+				<option ng-model="selectedRating.two"  ng-change="changeRating()">2</option>
+				<option ng-model="selectedRating.three"  ng-change="changeRating()">3</option>
+				<option ng-model="selectedRating.four"  ng-change="changeRating()">4</option>
+				<option ng-model="selectedRating.five"  ng-change="changeRating()">5</option>
+			</select>
+		</label>
+	</div>
+	<button ng-click="saveRoute()">Save Trip</button>
+	<button ng-click="getAllRoutes()">get Trip</button>
 	</div>
 	
 	<!-- <tt>model = {{selectedOptionEnd}}</tt><br/> -->
 	</div>
-	<div class="map" id="map">{{'map'}}</div>
 </div>
+<div class="col-md-6">
+	<div class="map" id="map">{{'map'}}</div>
+	<input id="pac-input" class="controls" type="text" placeholder="Type another city" ng-change="changeInput()"  ng-model="newCity" ng-trim="true">
+</div>	
 
+<div  class="col-md-3 col-sm-3 spaces" >
+<div class="spaces">
+	<button type="button" class="btn btn-default" data-toggle="collapse" data-target="#demo">First</button>
+  <div id="demo" class="collapse">
+    1Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+  </div>
+  </div>
+	
+
+</div>
+	
+</div>
+</div>

@@ -48,12 +48,22 @@ var travelAssistant = angular.module('travelAssistant',['ngRoute'
     }])
 .controller('PageController', function($rootScope, $scope, $cookies, authentication, identity) {
 	/*$scope.log = "Log In";*/
+	if(authentication.isAuthenticated()){
+		$liacation.path('/InsidePage/mapApp')
+	}
 	
-		identity.getCurrentUser()
+	
+	$scope.logout = function(){
+		
+	/*	authentication.isAuthenticated = false;*/
+		authentication.logoutUser()
+	}
+		
+	identity.getCurrentUser()
 		.then(function(user){
 	
 			$scope.currentUser = user;
-			$scope.isAuthenticated = true;
+			
 		});
 	
 	
@@ -113,38 +123,35 @@ travelAssistant.factory('authentication', [
             'BASE_URL',
             function($http, $cookies, $q, $location, identity, BASE_URL) {
                 
-                var AUTHENTICATION_COOKIE_KEY = '!__Authentication_Cookie_Key__!';
+     var AUTHENTICATION_COOKIE_KEY = '!__Authentication_Cookie_Key__!';
                 
-                function preserveUserData(data) {
+      function preserveUserData(data) {
                     var accessToken = data.access_token;
                     $http.defaults.headers.common.Authorization = 'Bearer ' + accessToken;
                     $cookies.put(AUTHENTICATION_COOKIE_KEY, accessToken);
-                }
+       }
                 
-                function registerUser(user) {
-            		
+      function registerUser(user) {
             		return $http({
             				url: '../server/insert.php',
             				data: user,
             				method: 'POST',
             				dataType: "json",
             				headers: {'Content-Type': 'application/json'}
-            			}).then(function(response){
-            				 preserveUserData(response.data);
-                             
+            			}).then(function success(response) {
+            				console.log(response);
+            				preserveUserData(response.data);
                              identity.requestUserProfile()
                              
-                             
                              return response;
-            				/*if(data.status == 200) {
-            					alert("success");
-            					
-            				} else {
-            					alert("Not success");
-            				}*/
-            			})
-                }
-                function sendAjax(user) {
+                             
+            			  }, function error(response) {
+            			    response = 'error';
+            			    return response;
+            			  })
+        }
+                
+      function sendAjax(user) {
                 	return $http({
             			url: '../server/login.php',
             			data: user,
@@ -152,71 +159,45 @@ travelAssistant.factory('authentication', [
             			dataType: "json",
             			headers: {'Content-Type': 'application/json'}
             		}).then(function(response){
+            			if(response.success == 'true'){
             			preserveUserData(response.data);
             			identity.requestUserProfile();
             			
             			return response;
+            		} else {
+        			    response = 'error';
+        			    return response;
+            		}
             		});
             		
-            	}
-                /*function registerUser(user) {
-                    var deferred = $q.defer();
-                    
-                    $http.post(BASE_URL + 'Users/Register', user)
-                        .then(function(response) {
-                            preserveUserData(response.data);
-                            
-                            identity.requestUserProfile()
-                                .then(function() {
-                                    deferred.resolve(response.data);
-                                });
-                        });
-                    
-                    return deferred.promise;
-                }
+       }
                 
-                function loginUser(user) {
-                    var deferred = $q.defer();
-                    
-                    $http.post(BASE_URL + 'Users/Login', user)
-                        .then(function(response) {
-                            preserveUserData(response.data);
-                            
-                            identity.requestUserProfile()
-                                .then(function() {
-                                    deferred.resolve(response.data);
-                                });
-                        });
-                        
-                    return deferred.promise;
-                }*/
-                
-                function isAuthenticated() {
+       function isAuthenticated() {
                     return !!$cookies.get(AUTHENTICATION_COOKIE_KEY);
-                }
+       }
                 
-                function logout() {
+       function logoutUser() {
                     $cookies.remove(AUTHENTICATION_COOKIE_KEY);
                     $http.defaults.headers.common.Authorization = undefined;
                     identity.removeUserProfile();
                     $location.path('/homePage');
-                }
+        }
                 
-                function refreshCookie() {
+       function refreshCookie() {
                     if (isAuthenticated()) {
                         $http.defaults.headers.common.Authorization = 'Bearer ' + $cookies.get(AUTHENTICATION_COOKIE_KEY);
                         identity.requestUserProfile();
                     }
-                }
+       }
                 
-                return {
+       return {
                 	registerUser: registerUser,
                     sendAjax: sendAjax,
                     isAuthenticated: isAuthenticated,
                     refreshCookie: refreshCookie,
-                    logout: logout
-                }
-        }])
+                    logoutUser: logoutUser
+       }
+}])
 
 travelAssistant.factory('identity', [
         '$http',
@@ -257,21 +238,71 @@ travelAssistant.factory('identity', [
 /**
  * 
  */
-travelAssistant.factory('userService', function($http, $httpParamSerializerJQLike) {
-	/*var baseUrl="http://localhost:3000/users";*/
+travelAssistant.factory('userService', ['$http', '$httpParamSerializerJQLike',
+                                        '$cookies',
+                                        '$q',
+                                        '$location', 
+                                        function($http, $httpParamSerializerJQLike, $cookies,
+                                                $q, $location) {
+
+	function registerRoute(route) {
 	
-	var users = [{name:'testuser', password:-5, email:'abv@abv.abv'},
-	             {name:'user 2', password:55, email:'abv@abv.abv'},
-	             {name:'user 3', password:33, email:'abv@abv.abv'},
-	             {name:'user 4', password:44, email:'abv@abv.abv'},
-	             {name:'user 5', password:55, email:'abv@abv.abv'}];
+		return $http({
+				url: '../server/saveRoute.php',
+				data: route,
+				method: 'POST',
+				dataType: "json",
+				headers: {'Content-Type': 'application/json'}
+			}).then(function(response){
+				 /*preserveRouteData(response.data);
+                */
+                 return response;
+				/*if(data.status == 200) {
+					alert("success");
+					
+				} else {
+					alert("Not success");
+				}*/
+			})
+    }
+	
+	function getRoutes(){
+		return $http({
+			url: '../server/list.php',
+			method: 'GET',
+			dataType: "json",
+			headers: {'Content-Type': 'application/json'}
+	}).then(function successCallback(response) {
+		$scope.result = response.data;
+		console.log(response);
+	  }, function errorCallback(response) {
+		  $scope.error = response;
+	  });
+	}
+	
+	function getRouteFromDB(user) {
+		
+		return $http({
+				url: '../server/getRouteFromDB.php',
+				data: user,
+				method: 'GET',
+				dataType: "json",
+				headers: {'Content-Type': 'application/json'}
+			}).then(function(response){
+				 /*preserveRouteData(response.data);
+                */
+                 return response;
+				/*if(data.status == 200) {
+					alert("success");
+					
+				} else {
+					alert("Not success");
+				}*/
+			})
+    }
+	
 	
 	return {
-		getAllUsers: function() {
-			return $http.get(baseUrl).then(function(response) {
-				return response;
-			});
-		},
 		getUserById: function(id) {
 			return users[id];
 		},
@@ -281,6 +312,14 @@ travelAssistant.factory('userService', function($http, $httpParamSerializerJQLik
 		updateById:function(id, updatedData) {
 			users[id] = updatedData;
 		},
+		
+		registerRoute: registerRoute,
+		
+		getRoutes: getRoutes,
+		
+		getRouteFromDB: getRouteFromDB
+		
+		
 		/*loginUser: function(user){
 			return $http.post('login.php', {newUser:newUser});
 		},
@@ -302,13 +341,11 @@ travelAssistant.factory('userService', function($http, $httpParamSerializerJQLik
                 });
         }*/
 	}
-});
+}]);
 
 'use strict';
 
-
-
-travelAssistant.controller('MapCtrl', ['$scope', '$rootScope', function($scope, $rootScope) {
+travelAssistant.controller('MapCtrl', ['$scope', '$rootScope', 'userService', function($scope, $rootScope, userService) {
     
 	if(!!navigator.geolocation) {
 	    
@@ -453,18 +490,33 @@ travelAssistant.controller('MapCtrl', ['$scope', '$rootScope', function($scope, 
 		directionsDisplay.setMap(map);
 		
 		$scope.calcRoute = function(geo, $window) {
-			var start = $scope.selectedOptionStart;;
+			var start = $scope.selectedOptionStart;
+			$scope.start = start;
 			var end1 = $scope.selectedOptionEnd;
+			$scope.end1 = end1;
 			end1 = end1.replace('(', "").replace(')', "");
 			start = start.replace('(', "").replace(')', "");
 			var wayPoints1 = [];
+			
+			
+			
 				for (var int = 0; int < wayPoints.length; int++) {
 					wayPoints1.push({
 					location: (wayPoints[int].position+'').replace('(', "").replace(')', ""),
 					stopover: true
 					});
 				}
-					
+				console.log(wayPoints1)
+				var wayPoints2 = '';
+				for (var int = 0; int < wayPoints1.length-1; int++) {
+					var a = wayPoints1[int].location+', ';
+					a += wayPoints1[int+1].location;
+				}	
+				wayPoints2 = a
+				console.log(wayPoints2)
+				
+				$scope.wayPoints2 = wayPoints2; 
+				
 			var requestRoute = {
 						/*origin: startPosLat1+', '+ startPosLng1,*/
 						origin: start,
@@ -474,13 +526,15 @@ travelAssistant.controller('MapCtrl', ['$scope', '$rootScope', function($scope, 
 						unitSystem: google.maps.UnitSystem.METRIC,
 						travelMode: 'WALKING'
 						};
+		
 			var route = null;
 			directionsService.route(requestRoute, function(result, status) {
+				console.log(requestRoute)
 				if (status == google.maps.DirectionsStatus.OK) {
 					directionsDisplay.setDirections(result);
 					route = result.routes[0];
-					$scope.route = route
-					console.log($scope.route) //save Route Func
+					//$scope.route = route
+					//console.log($scope.route) //save Route Func
 						
 					
 						for (var i = 0; i < route.legs.length; i++) {
@@ -513,14 +567,45 @@ travelAssistant.controller('MapCtrl', ['$scope', '$rootScope', function($scope, 
 		
 		
 		$scope.saveRoute = function() {
-			console.log($scope.route)//Write here the ajax request to save the route to tha DB
+			/*console.log($scope.route)//Write here the ajax request to save the route to tha DB
+*/			
+			
+				var user = '1'/*$scope.user.name*/;
+				$scope.start = $scope.start.replace('(', "").replace(')', "");
+				$scope.end1 = $scope.end1.replace('(', "").replace(')', "");
+				
+				var route = {
+					user: user,
+					origin: $scope.start,
+					destination: $scope.end1,
+					waypoints: $scope.wayPoints2,
+					optimizeWaypoints: true,
+					unitSystem: google.maps.UnitSystem.METRIC,
+					travelMode: 'WALKING'
+				};
+						
+				userService.registerRoute(route)
+				.then(function(response){
+					console.log('success');
+				});
+			
 		}
+		$scope.getAllRoutes = function() {
+			userService.getRoutes()
+			.then(function(response){
+				console.log('success');
+				console.log(response);
+			});
+		}
+		
+		
+		
 		var input = document.getElementById('pac-input');
 		var searchBox = new google.maps.places.SearchBox(input);
 		map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
        
 		$scope.changeInput = function() {
-			console.warn($scope.newCity);
+			//console.warn($scope.newCity);
 		};
 		map.addListener('bounds_changed', function() { // Bias the SearchBox results towards current map's viewport.
 			searchBox.setBounds(map.getBounds());
@@ -700,12 +785,12 @@ travelAssistant.controller("HomePageController",
 travelAssistant.controller("LoginUserController", 
 		['$scope', 'userService', '$http', '$location', 'authentication',
 		 function LoginUserController($scope, userService, $http, $location, authentication){
-			$scope.user={};
-	
-	if(authentication.isAuthentication) {
-		$location.path('/homePage/contacts');
+	console.log(authentication.isAuthenticated());
+	if(authentication.isAuthenticated()) {
+		$location.path('/InsidePage/mapApp');
 	}
 	
+	$scope.user={};
 	
 	$scope.login = function(){
 		var user = $scope.user.name;
@@ -717,39 +802,13 @@ travelAssistant.controller("LoginUserController",
 		};
 		authentication.sendAjax(data)
 		.then(function(loggedInUser){
-			$location.path('/homePage/contacts');
+			console.log(data);
+			
+			$location.path('/InsidePage/mapApp');
 		});
 	};
-			
-	/*$scope.sendAjax = function(user) {
-		var user = $scope.user.name;
-		var pass = $scope.user.password;
-		var data = {
-				name: user,
-				password: pass
-		};
-
-		$http({
-			url: '../server/login.php',
-			data: data,
-			method: 'POST',
-			dataType: "json",
-			headers: {'Content-Type': 'application/json'}
-		}).then(function(data){
-			console.log(data);
-			if(data.status == 200) {
-				alert("success");
-				$sessionStorage.logged = 1;
-				$location.path('/homePage/contacts');
-				
-			} else {
-				alert("Not success");
-			}
-		})
 		
-		$scope.user={};
-		
-	}*/
+	$scope.user={};
 }])
 /**
  * 
@@ -757,75 +816,35 @@ travelAssistant.controller("LoginUserController",
 travelAssistant.controller("SignUpUserController", 
 		['$scope', 'userService', '$http', '$location', 'authentication',
 		 function SignUpUserController($scope, userService, $http, $location, authentication){
+	
 	$scope.newUser = {};
 	
-/*	var user = $scope.newUser.name;
-	var pass = $scope.newUser.password;
-	var passRepeat = $scope.newUser.passRepeat;
-	var email = $scope.newUser.email;
-	console.log(pass);
-	if (pass === passRepeat){
-		var data = {
-				name: user,
-				password: pass,
-				email: email
-		}
-	} else {
-		console.log('error');
-	}*/
 	$scope.register = function(){
 		var user = $scope.newUser.name;
 		var pass = $scope.newUser.password;
 		var passRepeat = $scope.newUser.passRepeat;
 		var email = $scope.newUser.email;
+		
 		console.log(pass);
+		
 		if (pass === passRepeat){
 			var data = {
 					name: user,
 					password: pass,
 					email: email
 			}
-		} else {
-			console.log('error');
+			
+			authentication.registerUser(data)
+			.then(function(loggedInUser){
+				$location.path('/homePage/login');
+			}, function error(response){
+				alert(response);
+			});
+		} else{
+			console.log('wrong repeat password');
+			return;
 		}
-		authentication.registerUser(data)
-		.then(function(loggedInUser){
-			$location.path('/homePage/login');
-		});
 	};
-	/*$scope.addUserAjax = function(newUser) {
-		
-		var user = $scope.newUser.name;
-		var pass = $scope.newUser.password;
-		var passRepeat = $scope.newUser.passRepeat;
-		var email = $scope.newUser.email;
-		if (pass === passRepeat){
-			var data = {
-					name: user,
-					password: pass,
-					email: email
-			}
-		} else {
-			console.log('error');
-		}
-		userService.addNewUser($scope.newUser);
-		
-			$http({
-				url: '../server/insert.php',
-				data: data,
-				method: 'POST',
-				dataType: "json",
-				headers: {'Content-Type': 'application/json'}
-			}).then(function(data){
-				
-				if(data.status == 200) {
-					alert("success");
-					$location.path('/homePage/login');
-				} else {
-					alert("Not success");
-				}
-			})
-		*/
-		$scope.newUser = {};
+	$scope.newUser = {};
 
 }])

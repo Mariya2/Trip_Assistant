@@ -34,3 +34,4 @@ if ($result <= 0) {
 }
 
 echo json_encode($response);
+header("HTTP/1.0 404 Not Found");

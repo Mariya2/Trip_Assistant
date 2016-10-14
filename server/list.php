@@ -1,6 +1,10 @@
 <?php
 session_start(); 
 
+if(isset($_SERVER["CONTENT_TYPE"]) && strpos($_SERVER["CONTENT_TYPE"], "application/json") !== false) {
+	$_GET = array_merge($_GET, (array) json_decode(trim(file_get_contents('php://input')), true));
+}
+
 $data = isset($_SESSION['list']) ? $_SESSION['list'] : []; 
 /* echo json_encode($data); */
 //db
@@ -10,10 +14,12 @@ $pdo = new PDO('mysql:host=localhost;dbname=trip-site', DB_USER, DB_PASS, [
 		PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
 ]);
 
-$sth = $pdo->prepare('SELECT * FROM quotesbook');
+$sth = $pdo->prepare('SELECT * FROM routes');
 $sth->execute();
 $result = $sth->fetchAll(PDO::FETCH_ASSOC);
 if(!empty($result)){
 	
 	echo json_encode($result);
+} else {
+	header("HTTP/1.0 404 Not Found");
 }

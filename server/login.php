@@ -1,6 +1,7 @@
 <?php
 session_start();
 
+
 if(isset($_SERVER["CONTENT_TYPE"]) && strpos($_SERVER["CONTENT_TYPE"], "application/json") !== false) {
 	$_POST = array_merge($_POST, (array) json_decode(trim(file_get_contents('php://input')), true));
 }
@@ -22,24 +23,28 @@ $pdo = new PDO('mysql:host=localhost;dbname=trip-site', DB_USER, DB_PASS, [
 		PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
 ]);
 
-$statement = $pdo->prepare("SELECT * FROM dblogin where name='$user' AND pass='$pass'");
+$statement = $pdo->prepare("SELECT * FROM dblogin where name=:name AND pass=:pass");
 
-$statement -> execute();
+$statement -> execute([
+		':name' => $user,
+		':pass' => $pass
+]);
 
 $result = $statement->fetchAll(PDO::FETCH_ASSOC);
 
-if ($result == []) {
+if (empty($result)) {
 	$response = [
 			'success' => false,
-			'error' => 'Invalid name or password'
-			
+			'error' => 'Invalid name or password'	
 	];
+	header("HTTP/1.0 404 Not Found");
 	
 } else {
 	$response = [
 			'success' => true,
 			'error' => ''
 	];
+	$_SESSION['user'] = $user;
 	
 }
 

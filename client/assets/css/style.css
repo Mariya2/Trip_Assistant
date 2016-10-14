@@ -199,6 +199,44 @@ hr {
         font-size: 1em;
         padding: 1em; } }
 /* end section form */
+/*start myMap*/
+/*left*/
+#insidePage {
+  /*end left*/
+  /*middle*/
+  /*end middle*/
+  /*right*/
+  /*end right*/ }
+  #insidePage button {
+    width: 80px;
+    height: 80px;
+    background-color: #408080;
+    position: relative;
+    z-index: 100; }
+  #insidePage #floating-panel {
+    width: 150px;
+    height: 50px;
+    background-color: #808080;
+    position: relative;
+    z-index: 99; }
+  #insidePage .map {
+    width: 100%;
+    height: 600px;
+    border: 1px solid black;
+    position: absolute;
+    z-index: 80; }
+  #insidePage .gm-style-iw * {
+    display: block;
+    width: 100%;
+    height: 100%; }
+  #insidePage .gm-style-iw h4, #insidePage .gm-style-iw p {
+    margin: 0;
+    margin-left: 2%;
+    padding: 0; }
+  #insidePage .gm-style-iw a {
+    color: #4272db; }
+
+/*end myMap*/
 /* footer */
 footer {
   margin-top: 60px;

@@ -1,21 +1,71 @@
 /**
  * 
  */
-travelAssistant.factory('userService', function($http, $httpParamSerializerJQLike) {
-	/*var baseUrl="http://localhost:3000/users";*/
+travelAssistant.factory('userService', ['$http', '$httpParamSerializerJQLike',
+                                        '$cookies',
+                                        '$q',
+                                        '$location', 
+                                        function($http, $httpParamSerializerJQLike, $cookies,
+                                                $q, $location) {
+
+	function registerRoute(route) {
 	
-	var users = [{name:'testuser', password:-5, email:'abv@abv.abv'},
-	             {name:'user 2', password:55, email:'abv@abv.abv'},
-	             {name:'user 3', password:33, email:'abv@abv.abv'},
-	             {name:'user 4', password:44, email:'abv@abv.abv'},
-	             {name:'user 5', password:55, email:'abv@abv.abv'}];
+		return $http({
+				url: '../server/saveRoute.php',
+				data: route,
+				method: 'POST',
+				dataType: "json",
+				headers: {'Content-Type': 'application/json'}
+			}).then(function(response){
+				 /*preserveRouteData(response.data);
+                */
+                 return response;
+				/*if(data.status == 200) {
+					alert("success");
+					
+				} else {
+					alert("Not success");
+				}*/
+			})
+    }
+	
+	function getRoutes(){
+		return $http({
+			url: '../server/list.php',
+			method: 'GET',
+			dataType: "json",
+			headers: {'Content-Type': 'application/json'}
+	}).then(function successCallback(response) {
+		$scope.result = response.data;
+		console.log(response);
+	  }, function errorCallback(response) {
+		  $scope.error = response;
+	  });
+	}
+	
+	function getRouteFromDB(user) {
+		
+		return $http({
+				url: '../server/getRouteFromDB.php',
+				data: user,
+				method: 'GET',
+				dataType: "json",
+				headers: {'Content-Type': 'application/json'}
+			}).then(function(response){
+				 /*preserveRouteData(response.data);
+                */
+                 return response;
+				/*if(data.status == 200) {
+					alert("success");
+					
+				} else {
+					alert("Not success");
+				}*/
+			})
+    }
+	
 	
 	return {
-		getAllUsers: function() {
-			return $http.get(baseUrl).then(function(response) {
-				return response;
-			});
-		},
 		getUserById: function(id) {
 			return users[id];
 		},
@@ -25,6 +75,14 @@ travelAssistant.factory('userService', function($http, $httpParamSerializerJQLik
 		updateById:function(id, updatedData) {
 			users[id] = updatedData;
 		},
+		
+		registerRoute: registerRoute,
+		
+		getRoutes: getRoutes,
+		
+		getRouteFromDB: getRouteFromDB
+		
+		
 		/*loginUser: function(user){
 			return $http.post('login.php', {newUser:newUser});
 		},
@@ -46,4 +104,4 @@ travelAssistant.factory('userService', function($http, $httpParamSerializerJQLik
                 });
         }*/
 	}
-});
+}]);

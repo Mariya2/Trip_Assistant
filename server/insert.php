@@ -35,7 +35,9 @@ foreach ($people as $item) {
 }
 
 if ($ids[0] == "" && $ids[1] == "" && $ids[2] == "") {
+	header("HTTP/1.0 404 Not Found");
 	return;
+	
 } else {
 	echo json_encode(['success' => true]);
 }
