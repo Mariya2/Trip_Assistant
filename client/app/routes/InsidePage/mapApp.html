@@ -20,15 +20,18 @@
 		<label>art gallery
     		<input type="checkbox" ng-model="selectedAttractions.art_gallery"  ng-change="changeSelectAttr()">
   		</label><br/>
+  			<label>poi
+    		<input type="checkbox" ng-model="selectedAttractions.poi"  ng-change="changeSelectAttr()">
+  		</label><br/>
 		<button ng-click="showPlaces()">Show Places</button>
 		
 		
 		
 		<label for="startSelect"> Start Point </label>
 		 
-		<select name="startSelect" id="startSelect" ng-model="selectedOptionStart" ng-change="changeSelectStart()"> 
+		<select name="startSelect" id="startSelect" ng-model="selectedOptionStart" ng-change="changeSelectStart()"  > 
 		   <option value="">-Select Start-</option>
-		    <option ng-repeat="option in data track by option.id" ng-value="option.position" selected="selectedOptionStart == option.position"  >
+		    <option ng-repeat="option in data track by option.name" ng-value="option.position" selected="selectedOptionStart == option.position"  >
 		    	{{option.name}}
 		    </option>
 		</select> 
