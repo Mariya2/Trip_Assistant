@@ -1,7 +1,6 @@
 <?php
 session_start();
 
-//jeij
 if(isset($_SERVER["CONTENT_TYPE"]) && strpos($_SERVER["CONTENT_TYPE"], "application/json") !== false) {
 	$_POST = array_merge($_POST, (array) json_decode(trim(file_get_contents('php://input')), true));
 }
@@ -10,14 +9,11 @@ require_once 'db_settings.php';
 $user = empty($_POST['name']) ? '': $_POST['name'];
 $pass = empty($_POST['password']) ? '': $_POST['password'];
 
+/* $user = 'hhhhhh';
+$pass = 'hhhhhh'; */
+
 $people = [[$user, $pass]]; 
 
-/* $key = isset($_POST['key']) ? $_POST['key'] : null;
-if (empty($key)) {
-	$_SESSION['list'][] = $people;
-} else {
-	$_SESSION['list'][$key] = $people;
-}  */
 
 $pdo = new PDO('mysql:host=localhost;dbname=trip-site', DB_USER, DB_PASS, [
 		PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
@@ -31,6 +27,10 @@ $statement -> execute([
 ]);
 
 $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+if(isset($result)){
+	$_SESSION['infoUser'] = $result;
+}
 
 if (empty($result)) {
 	$response = [
@@ -47,5 +47,5 @@ if (empty($result)) {
 	$_SESSION['user'] = $user;
 	
 }
-
+/* var_dump($_SESSION['infoUser'][0]['id']); */
 echo json_encode($response);

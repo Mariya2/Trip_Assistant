@@ -26,7 +26,7 @@ travelAssistant.factory('authentication', [
             			}).then(function success(response) {
             				console.log(response);
             				preserveUserData(response.data);
-                             identity.requestUserProfile()
+                            identity.requestUserProfile()
                              
                              return response;
                              
@@ -63,9 +63,15 @@ travelAssistant.factory('authentication', [
                 
        function logoutUser() {
                     $cookies.remove(AUTHENTICATION_COOKIE_KEY);
+                    console.log($cookies);
                     $http.defaults.headers.common.Authorization = undefined;
                     identity.removeUserProfile();
                     $location.path('/homePage');
+                    /*if(isAuthenticated()== true) {
+                    	isAuthenticated()== false;
+                    } else {
+                    	isAuthenticated()== true;
+                    }*/
         }
                 
        function refreshCookie() {

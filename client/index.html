@@ -42,17 +42,17 @@
         <div class="navbar-collapse collapse" id="navbar-main">
             <ul class="nav navbar-nav">
                 <li>
-                    <a ng-href="#">Home</a>
+                    <a ng-href="#"> Home</a>
                 </li>
-                <li ng-if="isAuthenticated">
+                <li>
                  <a ng-href="#/InsidePage/mapApp" ng-click="MapCtrl()" ><span class="glyphicon glyphicon-globe" aria-hidden="true"></span>  My Map</a>
                 </li> 
                 <li>
-                    <a ng-href="#/homePage/contacts">Contacts</a>
+                    <a ng-href="#/homePage/contacts"> Contacts</a>
                 </li>
-                <li ng-if="!isAuthenticated"><a ng-href="#/homePage/login" class="log"><span class="glyphicon glyphicon-log-in" ></span>  Log In</a></li>
-				 <li ng-if="isAuthenticated" ng-click="logout()"><a ng-href="#/homePage" class="log"><span class="glyphicon glyphicon-log-in"></span>  Log Out</a></li>
-				<li ng-if="!isAuthenticated"><a ng-href="#/homePage/signUp" class="sign"><span class="glyphicon glyphicon-user"></span>  Sign Up</a></li>
+                <li><a ng-href="#/homePage/login" class="log"><span class="glyphicon glyphicon-log-in" ></span>  Log In</a></li>
+				 <li ng-click="logout()"><a ng-href="#/homePage" class="log"><span class="glyphicon glyphicon-log-in"></span>  Log Out</a></li>
+				<li><a ng-href="#/homePage/signUp" class="sign"><span class="glyphicon glyphicon-user"></span>  Sign Up</a></li>
             </ul>
         </div>
     </div>

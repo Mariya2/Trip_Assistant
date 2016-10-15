@@ -1,13 +1,15 @@
 <?php
-session_start(); 
+session_start();
+
+if(empty($_SESSION['user'])){
+	header("HTTP/1.0 401 Unauthorized");
+}
 
 if(isset($_SERVER["CONTENT_TYPE"]) && strpos($_SERVER["CONTENT_TYPE"], "application/json") !== false) {
 	$_GET = array_merge($_GET, (array) json_decode(trim(file_get_contents('php://input')), true));
 }
+$user = $_SESSION['infoUser'][0]['id'];
 
-$data = isset($_SESSION['list']) ? $_SESSION['list'] : []; 
-/* echo json_encode($data); */
-//db
 require_once 'db_settings.php';
 
 $pdo = new PDO('mysql:host=localhost;dbname=trip-site', DB_USER, DB_PASS, [

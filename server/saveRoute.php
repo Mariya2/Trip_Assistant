@@ -10,25 +10,18 @@ if(isset($_SERVER["CONTENT_TYPE"]) && strpos($_SERVER["CONTENT_TYPE"], "applicat
     $_POST = array_merge($_POST, (array) json_decode(trim(file_get_contents('php://input')), true));
 }
 
-
-$userId = empty($_POST['user']) ? '': $_POST['user'];
+//$userId = empty($_SESSION['user']) ? '': $_SESSION['user'];
+$userId = $_SESSION['infoUser'][0]['id'];
 $origin = empty($_POST['origin']) ? '': $_POST['origin'];
 $destination = empty($_POST['destination']) ? '': $_POST['destination'];
 $waypoints = empty($_POST['waypoints']) ? '': $_POST['waypoints'];
 $optWaypoints = empty($_POST['optimizeWaypoints']) ? '': $_POST['optimizeWaypoints'];
-$unitSystem = empty($_POST['unitSystem']) ? '': $_POST['unitSystem'];
 $travelMode = empty($_POST['travelMode']) ? '': $_POST['travelMode'];
-$route = [[$userId, $origin, $destination, $waypoints, $optWaypoints, $unitSystem, $travelMode]];
+$message = empty($_POST['message']) ? '': $_POST['message'];
+$routeName = empty($_POST['routeName']) ? '': $_POST['routeName'];
+$rating = empty($_POST['rating']) ? '': $_POST['rating'];
 
-/* $key = isset($_POST['key']) ? $_POST['key'] : null;
-if (empty($key)) {
-	$_SESSION['list'][] = $people;
-} else {
-	$_SESSION['list'][$key] = $people;
-} */
-
-/* $people = [['aaa', 'aaa', "aaa"]]; */
-
+$route = [[$userId, $origin, $destination, $waypoints, $optWaypoints, $travelMode, $message, $routeName, $rating]];
 
 require_once 'db_settings.php';
 
@@ -36,7 +29,7 @@ $pdo = new PDO('mysql:host=localhost;dbname=trip-site', DB_USER, DB_PASS, [
     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
 ]);
 
-$insertRouteSql = 'INSERT INTO routes (user_id, origin, destination, waypoints, optimize_waypoints, unit_system, travel_mode) VALUES (?, ?, ?, ?, ?, ?, ?)';  
+$insertRouteSql = 'INSERT INTO routes (user_id, origin, destination, waypoints, optimize_waypoints, travel_mode, message, route_name, rating) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)';  
 $statement = $pdo->prepare($insertRouteSql);
 
 $ids = [];

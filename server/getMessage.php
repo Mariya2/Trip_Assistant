@@ -1,4 +1,10 @@
 <?php
+session_start();
+
+if(empty($_SESSION['user'])){
+	header("HTTP/1.0 401 Unauthorized");
+}
+
 if(isset($_SERVER["CONTENT_TYPE"]) && strpos($_SERVER["CONTENT_TYPE"], "application/json") !== false) {
     $_POST = array_merge($_POST, (array) json_decode(trim(file_get_contents('php://input')), true));
 }
@@ -6,7 +12,7 @@ if(isset($_SERVER["CONTENT_TYPE"]) && strpos($_SERVER["CONTENT_TYPE"], "applicat
 $user = empty($_POST['name']) ? '': $_POST['name'];
 $message = empty($_POST['message']) ? '': $_POST['message'];
 $email = empty($_POST['email']) ? '': $_POST['email'];
-$people = [[$user, $message, $email]];
+$people = [[$user, $email, $message]];
 
 /* $key = isset($_POST['key']) ? $_POST['key'] : null;
 if (empty($key)) {

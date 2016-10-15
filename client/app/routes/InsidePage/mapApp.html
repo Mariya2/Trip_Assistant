@@ -1,6 +1,4 @@
 <div id="insidePage" class="container">
-
-
 <div class="row">
 
 <div class="col-md-3">
@@ -60,23 +58,29 @@
 		 <span ng-model="totalTimeMinutes">Time Length: {{totalTimeMinutes()}} </span>
 		 <span ng-model="totalRouteKm">Route Length: {{totalRouteKm()}}</span>
 	</div>
-	<div><label>Comment
-		<textarea placeholder="make a comment"></textarea>
+	<div>
+		<label>Trip Name
+		<input type="text" placeholder="Type trip name" ng-model="routeName" style="color:black">
+		</label>
+	</div>
+	<div>
+		<label>Comment
+		<textarea placeholder="make a comment" ng-model="message"></textarea>
 		</label>
 	</div>
 	<div>
 		<label>Rate the trip
-			<select name="rating" id="rating">
-				<option ng-model="selectedRating.one"  ng-change="changeRating()">1</option>
-				<option ng-model="selectedRating.two"  ng-change="changeRating()">2</option>
-				<option ng-model="selectedRating.three"  ng-change="changeRating()">3</option>
-				<option ng-model="selectedRating.four"  ng-change="changeRating()">4</option>
-				<option ng-model="selectedRating.five"  ng-change="changeRating()">5</option>
+			<select name="rating" id="rating" ng-model="selectedRating">
+				<option>1</option>
+				<option>2</option>
+				<option>3</option>
+				<option>4</option>
+				<option>5</option>
 			</select>
 		</label>
 	</div>
 	<button ng-click="saveRoute()">Save Trip</button>
-	<button ng-click="getAllRoutes()">get Trip</button>
+	
 	</div>
 	
 	<!-- <tt>model = {{selectedOptionEnd}}</tt><br/> -->
@@ -88,12 +92,20 @@
 </div>	
 
 <div  class="col-md-3 col-sm-3 spaces" >
-<div class="spaces">
-	<button type="button" class="btn btn-default" data-toggle="collapse" data-target="#demo">First</button>
-  <div id="demo" class="collapse">
-    1Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+	<button ng-click="getAllRoutes()">GET ALL Routes</button>
+	<button ng-click="getUserRoutes()">SEE MY Routes</button>
+	<br>
+<div ng-repeat="data in response">
+	<div >
+	<button type="button" class="btn btn-default"  ng-click="showAndHideInfo()">{{data.route_name}}</button>
+  <div ng-show="hideInfo">
+    <p><strong>Destination</strong> - {{data.destination}};</p>
+    <p><strong>Rating</strong> - {{data.rating}};<br> 
+    <button class="btn btn-sm" ng-click="downRating(data.rating)">-</button>
+    <button class="btn btn-sm" ng-click="upRating(data.rating)">+</button></p>
+    <p><strong>Comment</strong> - {{data.message}};</p>
+    <p><strong>Waipoints</strong> - {{data.waypoints}}</p>
+  </div>
   </div>
   </div>
 	

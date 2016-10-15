@@ -19,6 +19,7 @@ travelAssistant.factory('userService', ['$http', '$httpParamSerializerJQLike',
 			}).then(function(response){
 				 /*preserveRouteData(response.data);
                 */
+				
                  return response;
 				/*if(data.status == 200) {
 					alert("success");
@@ -33,35 +34,28 @@ travelAssistant.factory('userService', ['$http', '$httpParamSerializerJQLike',
 		return $http({
 			url: '../server/list.php',
 			method: 'GET',
-			dataType: "json",
-			headers: {'Content-Type': 'application/json'}
-	}).then(function successCallback(response) {
-		$scope.result = response.data;
-		console.log(response);
-	  }, function errorCallback(response) {
-		  $scope.error = response;
+	}).then(function(response) {
+		console.log(response.data);
+		var resultAllRoutes = response.data;
+		return resultAllRoutes;
+	  }, function(response) {
+		  console.log(response.data);
+		  response = 'error';
+		  console.log(response);
 	  });
 	}
 	
-	function getRouteFromDB(user) {
-		
+	function getUserRoutesFromDB() {
 		return $http({
 				url: '../server/getRouteFromDB.php',
-				data: user,
 				method: 'GET',
-				dataType: "json",
-				headers: {'Content-Type': 'application/json'}
 			}).then(function(response){
-				 /*preserveRouteData(response.data);
-                */
-                 return response;
-				/*if(data.status == 200) {
-					alert("success");
-					
-				} else {
-					alert("Not success");
-				}*/
-			})
+				console.log(response.data);
+				var userRoutes = response.data;
+				return userRoutes;
+			}, function(response) {
+   				  $scope.error = response;
+   			});
     }
 	
 	
@@ -80,7 +74,7 @@ travelAssistant.factory('userService', ['$http', '$httpParamSerializerJQLike',
 		
 		getRoutes: getRoutes,
 		
-		getRouteFromDB: getRouteFromDB
+		getUserRoutesFromDB: getUserRoutesFromDB
 		
 		
 		/*loginUser: function(user){

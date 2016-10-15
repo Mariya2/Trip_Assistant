@@ -1,12 +1,17 @@
 <?php
+session_start();
+
+if(empty($_SESSION['user'])){
+	header("HTTP/1.0 401 Unauthorized");
+}
+
 if(isset($_SERVER["CONTENT_TYPE"]) && strpos($_SERVER["CONTENT_TYPE"], "application/json") !== false) {
 	$_POST = array_merge($_POST, (array) json_decode(trim(file_get_contents('php://input')), true));
 }
-/* $user = empty($_POST['name']) ? '': $_POST['name'];
-$pass = empty($_POST['password']) ? '': $_POST['password']; */
+$user = empty($_POST['name']) ? '': $_POST['name'];
+$pass = empty($_POST['password']) ? '': $_POST['password'];
 
-$user="vvvvvv";
-$pass = "555555";
+
 $data = [[$user, $pass]];
 
 require_once 'db_settings.php';
@@ -34,4 +39,3 @@ if ($result <= 0) {
 }
 
 echo json_encode($response);
-header("HTTP/1.0 404 Not Found");

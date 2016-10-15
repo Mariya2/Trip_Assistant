@@ -147,9 +147,9 @@ travelAssistant.controller('MapCtrl', ['$scope', '$rootScope', 'userService', fu
 		$scope.calcRoute = function(geo, $window) {
 			var start = $scope.selectedOptionStart;
 			$scope.start = start;
-			var end1 = $scope.selectedOptionEnd;
-			$scope.end1 = end1;
-			end1 = end1.replace('(', "").replace(')', "");
+			var endPoint = $scope.selectedOptionEnd;
+			$scope.endPoint = endPoint;
+			endPoint = endPoint.replace('(', "").replace(')', "");
 			start = start.replace('(', "").replace(')', "");
 			var wayPoints1 = [];
 			
@@ -175,7 +175,7 @@ travelAssistant.controller('MapCtrl', ['$scope', '$rootScope', 'userService', fu
 			var requestRoute = {
 						/*origin: startPosLat1+', '+ startPosLng1,*/
 						origin: start,
-						destination: end1,
+						destination: endPoint,
 						waypoints: wayPoints1,
 						optimizeWaypoints: true,
 						unitSystem: google.maps.UnitSystem.METRIC,
@@ -218,26 +218,23 @@ travelAssistant.controller('MapCtrl', ['$scope', '$rootScope', 'userService', fu
 					}
 			});
 		}
-		
-		
+				
 		
 		$scope.saveRoute = function() {
-			/*console.log($scope.route)//Write here the ajax request to save the route to tha DB
-*/			
 			
 				var user = '1'/*$scope.user.name*/;
 				$scope.start = $scope.start.replace('(', "").replace(')', "");
-				$scope.end1 = $scope.end1.replace('(', "").replace(')', "");
-				
+				$scope.endPoint = $scope.endPoint.replace('(', "").replace(')', "");
 				var route = {
-					user: user,
 					origin: $scope.start,
-					destination: $scope.end1,
+					destination: $scope.endPoint,
 					waypoints: $scope.wayPoints2,
 					optimizeWaypoints: true,
-					unitSystem: google.maps.UnitSystem.METRIC,
-					travelMode: 'WALKING'
-				};
+					travelMode: 'WALKING',
+					message: $scope.message,
+					routeName: $scope.routeName,
+					rating: $scope.selectedRating
+					};
 						
 				userService.registerRoute(route)
 				.then(function(response){
@@ -248,12 +245,47 @@ travelAssistant.controller('MapCtrl', ['$scope', '$rootScope', 'userService', fu
 		$scope.getAllRoutes = function() {
 			userService.getRoutes()
 			.then(function(response){
-				console.log('success');
-				console.log(response);
+				if (response != 'error') {
+					$scope.response = response;
+				}
+			});
+		}
+		$scope.getUserRoutes = function() {
+			userService.getUserRoutesFromDB()
+			.then(function(response){
+				if (response != 'error') {
+					$scope.response = response;
+				}
 			});
 		}
 		
 		
+		$scope.hideInfo = false;
+		$scope.showAndHideInfo = showAndHideInfo;
+		function showAndHideInfo(){
+			if ($scope.hideInfo == false) {
+               
+                $scope.hideInfo = true;
+            } else {
+                $scope.hideInfo = false;
+            }
+		}
+		
+	
+		$scope.upRating = upRating;
+		$scope.downRating = downRating;
+		
+		function upRating(ratingChange) {
+			if (ratingChange < 5) {
+				ratingChange++; // TODO: save
+			}
+		}
+
+        function downRating(ratingChange) {
+            if (ratingChange > 0) {
+            	ratingChange--; // TODO: save
+            }
+        }
 		
 		var input = document.getElementById('pac-input');
 		var searchBox = new google.maps.places.SearchBox(input);
