@@ -121,6 +121,7 @@ travelAssistant.controller('MapCtrl', ['$scope', '$rootScope', 'userService', fu
 		
 			endPoint = endPoint.replace('(', "").replace(')', "");
 			start = start.replace('(', "").replace(')', "");
+			console.log(endPoint, start)
 			var wayPoints1 = [];
 			
 			

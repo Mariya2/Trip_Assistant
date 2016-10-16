@@ -463,6 +463,7 @@ travelAssistant.controller('MapCtrl', ['$scope', '$rootScope', 'userService', fu
 		
 			endPoint = endPoint.replace('(', "").replace(')', "");
 			start = start.replace('(', "").replace(')', "");
+			console.log(endPoint, start)
 			var wayPoints1 = [];
 			
 			
@@ -594,26 +595,28 @@ travelAssistant.controller('MapCtrl', ['$scope', '$rootScope', 'userService', fu
 				}
 		}
 		$scope.changeSelectStart = function() {
-			console.log(118)
+			
 			console.log($scope.selectedOptionStart);
 			
 		};
 		$scope.changeSelectEnd = function() {
-			console.log(119)
 		
 			console.log($scope.selectedOptionStart);
 		};	
 		
 		$scope.calcRoute = function(geo, $window) {
-			console.log(1111)
+			
 			var start = $scope.selectedOptionStart;
-			$scope.start = start;
-			console.log($scope.start)
+			
+			
 			var endPoint = $scope.selectedOptionEnd;
-			$scope.endPoint = endPoint;
-			console.log(endPoint)
+			
+			
 			endPoint = endPoint.replace('(', "").replace(')', "");
 			start = start.replace('(', "").replace(')', "");
+			$scope.start = start;
+			$scope.endPoint = endPoint;
+			console.log(endPoint,start)
 			var wayPoints1 = [];
 			
 			$scope.wayPoints1 = wayPoints1;
@@ -930,6 +933,15 @@ travelAssistant.controller("ContactsController",
 /**
  * 
  */
+travelAssistant.controller("HomePageController",
+		['$scope', 'userService', '$http',
+		 function HomePageController($scope, userService, $http){
+			
+			
+		}])
+/**
+ * 
+ */
 travelAssistant.controller("EditUserController",
 		['$scope', 'userService', '$http',
 		 function EditUserController($scope, userService, $http){
@@ -973,15 +985,6 @@ travelAssistant.controller("EditUserController",
 	}
 	
 }])
-/**
- * 
- */
-travelAssistant.controller("HomePageController",
-		['$scope', 'userService', '$http',
-		 function HomePageController($scope, userService, $http){
-			
-			
-		}])
 
 travelAssistant.controller("LoginUserController", 
 		['$scope', 'userService', '$http', '$location', 'authentication',
