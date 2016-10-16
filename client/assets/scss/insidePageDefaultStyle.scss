@@ -6,47 +6,32 @@
 
 body {
 	background:  $blue4;
-	font-family: Ailerons-Typeface;
+	font-family: Franklin Gothic Book, Arial Narrow, Ailerons-Typeface;
 }
+
 a {
   text-align: center;
  font-family: Ailerons-Typeface;
 	font-size: 1.5em;
-  
   text-decoration: none;
 
 }
 #navbar-header{
-	width: $totalWidth;
-	height: $headerHeight;
-	position: absolute;
-	
-	margin-left: -5em;
-	
-
-	#logo {
-	
-				width:$totalWidth*0.2;
-				margin-left: 1em;
-				position:relative;
-				margin-right: 5em;
+				font-family: Ailerons-Typeface;
 				font-weight: normal;
 				color: $blue4;
-				float:left;
-				a{font-size: 2.5em;
+				
+				a{
+				font-size: 2em;
 				font-weight: bold;
 				color: $blue4;
 				}
-					
-	}
-	#other-navbar{
-	left: 10em;
-		width:$totalWidth*0.6;
-		display: inline-block;
-		
-		background-color: pink;
-	}
 }
+#navbar-main {
+	float: right;
+	padding: 0;
+}
+
 #picture-background{
 	width: totalWidth;
 	height: $windowHeight;

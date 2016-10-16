@@ -6,7 +6,7 @@
   src: url(Nexa-Light.otf); }
 body {
   background: #0a1b6a;
-  font-family: Ailerons-Typeface; }
+  font-family: Franklin Gothic Book, Arial Narrow, Ailerons-Typeface; }
 
 a {
   text-align: center;
@@ -15,27 +15,17 @@ a {
   text-decoration: none; }
 
 #navbar-header {
-  width: 1280px;
-  height: 59.42857px;
-  position: absolute;
-  margin-left: -5em; }
-  #navbar-header #logo {
-    width: 256px;
-    margin-left: 1em;
-    position: relative;
-    margin-right: 5em;
-    font-weight: normal;
-    color: #0a1b6a;
-    float: left; }
-    #navbar-header #logo a {
-      font-size: 2.5em;
-      font-weight: bold;
-      color: #0a1b6a; }
-  #navbar-header #other-navbar {
-    left: 10em;
-    width: 768px;
-    display: inline-block;
-    background-color: pink; }
+  font-family: Ailerons-Typeface;
+  font-weight: normal;
+  color: #0a1b6a; }
+  #navbar-header a {
+    font-size: 2em;
+    font-weight: bold;
+    color: #0a1b6a; }
+
+#navbar-main {
+  float: right;
+  padding: 0; }
 
 #picture-background {
   width: totalWidth;
