@@ -6,7 +6,8 @@
   src: url(Nexa-Light.otf); }
 body {
   background: #0a1b6a;
-  font-family: Franklin Gothic Book, Arial Narrow, Ailerons-Typeface; }
+  font-family: Nexa-Light, Franklin Gothic Book, Arial Narrow, Ailerons-Typeface;
+  color: #0a1b6a; }
 
 a {
   text-align: center;
@@ -25,7 +26,11 @@ a {
 
 #navbar-main {
   float: right;
-  padding: 0; }
+  padding: 0;
+  color: #0a1b6a; }
+
+.navbar-default .navbar-nav > li > a {
+  color: #0a1b6a; }
 
 #picture-background {
   width: totalWidth;
@@ -209,8 +214,8 @@ hr {
 
 .btn {
   text-align: center;
-  border: 1px solid white;
-  color: white;
+  border: 1px solid #394fb3;
+  color: #394fb3;
   border-radius: 3em;
   background: transparent;
   padding: 2em;
@@ -272,148 +277,133 @@ hr {
 /* end section form */
 /***************start myMap*************start myMap********start myMap****/
 /*************Map_left_nav_bar***************************************/
-#insidePage {
-  font-family: Nexa-Light;
-  color: white;
-  margin: 0px;
-  padding: 0px;
-  /*************end_Map_left_nav_bar*******end_Map_left_nav_bar**/
-  /***middleMAP*******middleMAP****middleMAP****middleMAP*****/
-  /*end middle*/
-  /*right*/
-  /*end right*/ }
-  #insidePage #insidePage.row {
-    margin-left: -15px;
-    margin-right: -15px; }
-    #insidePage #insidePage.row .col-md-3 {
-      margin: 0px;
-      padding: 0px; }
-  #insidePage .my-button, #insidePage .login button, .login #insidePage button {
-    transition: all 0.1s;
-    -webkit-transition: all 0.1s;
-    padding: 0;
-    margin: 1em 0em;
-    border-radius: 10px;
-    color: #5a6dc2;
-    text-decoration: none;
-    border: 1px solid #000066;
-    background: linear-gradient(#0a1b6a, #102586, #0a1b6a);
-    text-shadow: 0px -2px #102586;
-    width: 140px;
-    height: 30px;
-    background-color: #0a1b6a;
-    border-bottom: 3px solid #000066;
-    z-index: 100; }
-  #insidePage .my-button:active, #insidePage .login button:active, .login #insidePage button:active {
-    transform: translate(0px, 5px);
-    -webkit-transform: translate(0px, 5px);
-    border-bottom: 0.5px solid; }
-  #insidePage #left-panel {
-    width: 100%;
-    height: 468px;
-    padding: 0px;
-    background-color: #394fb3;
-    display: inline-block;
-    box-size: border-box;
-    margin: 0%; }
-    #insidePage #left-panel #places-holder {
-      width: 100%;
-      height: 234px; }
-    #insidePage #left-panel #route-holder {
-      width: 100%;
-      height: 234px; }
-    #insidePage #left-panel h4 {
-      text-shadow: 0px 2px 0px rgba(90, 109, 194, 0.5);
-      font-weight: bold;
-      color: #102586; }
-    #insidePage #left-panel .line {
-      width: 100%;
-      border-top: 4px solid #0a1b6a;
-      box-shadow: 0px 1px 0px rgba(16, 37, 134, 0.5); }
-    #insidePage #left-panel h5 {
-      color: #5a6dc2; }
-    #insidePage #left-panel #check-boxes-container {
-      width: 100%;
-      height: 30em; }
-      #insidePage #left-panel #check-boxes-container .squaredThree {
-        display: block;
-        float: left;
-        width: 100%;
-        position: relative;
-        left: 0.1em; }
-        #insidePage #left-panel #check-boxes-container .squaredThree label {
-          margin-left: 1em;
-          width: 7%;
-          height: 1.2em;
-          cursor: pointer;
-          position: absolute;
-          top: 0;
-          left: 0;
-          background: linear-gradient(top, #222 0%, #45484d 100%);
-          border-radius: 4px;
-          box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.5), 0px 1px 0px rgba(255, 255, 255, 0.4); }
-          #insidePage #left-panel #check-boxes-container .squaredThree label:after {
-            content: '';
-            width: 9px;
-            height: 5px;
-            position: absolute;
-            top: 4px;
-            left: 4px;
-            border: 3px solid #fcfff4;
-            border-top: none;
-            border-right: none;
-            background: transparent;
-            opacity: 0;
-            transform: rotate(-45deg); }
-          #insidePage #left-panel #check-boxes-container .squaredThree label:hover::after {
-            opacity: 0.3; }
-        #insidePage #left-panel #check-boxes-container .squaredThree .pois {
-          width: 30%;
-          height: 8%;
-          color: #5a6dc2;
-          margin-left: 15%; }
-        #insidePage #left-panel #check-boxes-container .squaredThree input[type=checkbox] {
-          visibility: hidden; }
-          #insidePage #left-panel #check-boxes-container .squaredThree input[type=checkbox]:checked + label:after {
-            opacity: 1; }
-  #insidePage #start, #insidePage #end {
-    margin-left: 1em;
-    color: #5a6dc2; }
-    #insidePage #start [placeholder], #insidePage #end [placeholder] {
-      width: 181.33333px;
-      height: 23.77143px;
-      background-color: #394fb3;
-      border: 0.01em solid #5a6dc2;
-      padding-left: 4%;
-      color: white;
-      font-size: 0.81em;
-      font-weight: bold; }
-  #insidePage .metal, #insidePage #left-panel {
-    background-image: -webkit-repeating-linear-gradient(left, rgba(10, 28, 107, 0) 0%, rgba(10, 28, 107, 0) 6%, rgba(10, 28, 107, 0.1) 7.5%), -webkit-repeating-linear-gradient(left, rgba(10, 28, 107, 0) 0%, rgba(75, 77, 88, 0) 4%, rgba(75, 77, 88, 0.03) 4.5%), -webkit-repeating-linear-gradient(left, rgba(10, 28, 107, 0) 0%, rgba(10, 28, 107, 0) 1.2%, rgba(10, 28, 107, 0.15) 2.2%), linear-gradient(180deg, #0a1c6b 0%, #102584 47%, #102584 53%, #0a1c6b 100%); }
-  #insidePage #map-container {
-    background-color: yellow; }
-  #insidePage .map {
-    width: 100%;
-    height: 468px;
-    border: 1px solid black;
-    display: inline-block;
-    box-size: border-box;
-    padding: 0px; }
-  #insidePage .gm-style-iw * {
-    display: block;
-    width: 100%;
-    height: 100%; }
-  #insidePage .gm-style-iw h4, #insidePage .gm-style-iw p {
-    margin: 0;
-    margin-left: 2%;
-    padding: 0; }
-  #insidePage .gm-style-iw a {
-    color: #4272db; }
-  #insidePage #left-navbar {
-    width: 100%;
-    height: 416px;
-    background-color: pink; }
+.col-md-3, .col-md-6 {
+  color: #5a6dc2;
+  background: linear-gradient(#0a1b6a, #102586, #0a1b6a); }
 
+#insidePage h4 {
+  text-shadow: 0px 2px 0px rgba(90, 109, 194, 0.5);
+  font-weight: bold;
+  color: #102586; }
+#insidePage .line {
+  width: 100%;
+  margin: 10px;
+  border-top: 4px solid #0a1b6a;
+  box-shadow: 0px 1px 0px rgba(16, 37, 134, 0.5); }
+#insidePage h5 {
+  color: #5a6dc2; }
+#insidePage .my-button, #insidePage .login button, .login #insidePage button {
+  transition: all 0.1s;
+  -webkit-transition: all 0.1s;
+  padding: 0;
+  margin: 0.5em 0;
+  border-radius: 10px;
+  color: #5a6dc2;
+  text-decoration: none;
+  border: 1px solid #000066;
+  background: linear-gradient(#0a1b6a, #102586, #0a1b6a);
+  text-shadow: 0px -2px #102586;
+  width: 140px;
+  height: 30px;
+  border-bottom: 3px solid #000066; }
+#insidePage .my-button:active, #insidePage .login button:active, .login #insidePage button:active {
+  transform: translate(0px, 5px);
+  -webkit-transform: translate(0px, 5px);
+  border-bottom: 0.5px solid #fcfff4; }
+#insidePage #left-panel #places-holder .pois {
+  display: inline-block;
+  width: 100%;
+  color: #394fb3;
+  padding: 0; }
+  #insidePage #left-panel #places-holder .pois > input[type="checkbox"]:after {
+    padding-right: 10px;
+    border: 3px solid #fcfff4;
+    border-top: none;
+    border-right: none;
+    background: transparent;
+    opacity: 0;
+    transform: rotate(-45deg); }
+#insidePage #left-panel #route-holder #start, #insidePage #left-panel #route-holder #end {
+  color: #5a6dc2; }
+  #insidePage #left-panel #route-holder #start select, #insidePage #left-panel #route-holder #end select {
+    border-radius: 8px;
+    border: 1px solid #000066;
+    border-top: none;
+    border-right: none;
+    background: transparent;
+    display: inline-block;
+    width: 130px;
+    padding: 2px 0;
+    border-bottom: 3px solid #000066; }
+  #insidePage #left-panel #route-holder #start [placeholder], #insidePage #left-panel #route-holder #end [placeholder] {
+    width: 181.33333px;
+    height: 23.77143px;
+    background-color: #394fb3;
+    border: 0.01em solid #5a6dc2;
+    padding-left: 4%;
+    color: white;
+    font-size: 0.81em;
+    font-weight: bold; }
+#insidePage #left-panel #route-info p {
+  color: #5a6dc2;
+  margin: 5px 20px; }
+#insidePage #left-panel #route-info .newLine {
+  display: inline-block;
+  width: 100%; }
+#insidePage #left-panel #route-info select {
+  border-radius: 8px;
+  border: 1px solid #000066;
+  border-top: none;
+  border-right: none;
+  background: transparent;
+  display: inline-block;
+  width: 80px;
+  padding: 2px 0;
+  border-bottom: 3px solid #000066; }
+#insidePage #left-panel #route-info input, #insidePage #left-panel #route-info textarea {
+  border-radius: 8px;
+  border: 1px solid #000066;
+  background: #102586;
+  color: #5a6dc2;
+  border-bottom: 3px solid #000066;
+  text-align: center;
+  opacity: 0.8;
+  padding-top: 0; }
+#insidePage #left-panel #route-info textarea {
+  display: inline-block;
+  width: 100%; }
+
+.metal, #insidePage #left-panel {
+  background-image: -webkit-repeating-linear-gradient(left, rgba(10, 28, 107, 0) 0%, rgba(10, 28, 107, 0) 6%, rgba(10, 28, 107, 0.1) 7.5%), -webkit-repeating-linear-gradient(left, rgba(10, 28, 107, 0) 0%, rgba(75, 77, 88, 0) 4%, rgba(75, 77, 88, 0.03) 4.5%), -webkit-repeating-linear-gradient(left, rgba(10, 28, 107, 0) 0%, rgba(10, 28, 107, 0) 1.2%, rgba(10, 28, 107, 0.15) 2.2%), linear-gradient(180deg, #0a1c6b 0%, #102584 47%, #102584 53%, #0a1c6b 100%); }
+
+/*************end_Map_left_nav_bar*******end_Map_left_nav_bar**/
+/***middleMAP*******middleMAP****middleMAP****middleMAP*****/
+.map {
+  width: 100%;
+  height: 520px;
+  border: 1px solid #000066;
+  box-shadow: 5px 8px 5px #000066;
+  display: inline-block; }
+
+.gm-style-iw * {
+  display: block;
+  width: 100%;
+  height: 100%; }
+
+.gm-style-iw h4, .gm-style-iw p {
+  margin: 0;
+  margin-left: 2%;
+  padding: 0; }
+
+.gm-style-iw a {
+  color: #4272db; }
+
+/*end middle*/
+/*right*/
+#resut-routes form .my-button, #resut-routes form .login button, .login #resut-routes form button {
+  width: 40px; }
+
+/*end right*/
 /*end myMap*/
 /* footer */
 footer {

@@ -1,111 +1,112 @@
-<div id="insidePage" class="container">
+<div class="container-fluid" id="insidePage">
 <div class="row">
 
-<div class="col-md-2">
-
-	<div id="left-panel"  ng-click = "selectionClick()">
-	
-
-	<div id="places-holder"  >
-	
-	<form name="myForm" >		
-		              
-		<h5>Select Places to Visit:</h5>
-		<div id="check-boxes-container" class="squaredThree">
-				<input type="checkbox" ng-model="selectedAttractions.museum"  ng-change="changeSelectAttr()">
-	  			<label for="squaredThree"></label><span for="squaredTwo" class="pois">museum</span>
+<div class="col-md-3 col-sm-6 col-xs-12"  id="left-panel" ng-click = "selectionClick()">
+	<form name="myForm">
+		<div id="places-holder">      
+			<h4>Select Places to Visit:</h4>
+			<div id="check-boxes-container">
+	  				<label  class="pois"><input type="checkbox" ng-model="selectedAttractions.place_of_worship"  ng-change="changeSelectAttr()"> place of worship</label> 
 	  		
-	    		<input class="squaredThree" type="checkbox" ng-model="selectedAttractions.poi"  ng-change="changeSelectAttr()">
-	  			<label for="squaredThree"></label><span for="squaredTwo" class="pois">other</span>
+		  			<label class="pois"><input type="checkbox" ng-model="selectedAttractions.museum"  ng-change="changeSelectAttr()"> museum</label>
+		  			
+	  				<label  class="pois"><input type="checkbox" ng-model="selectedAttractions.amusement_park"  ng-change="changeSelectAttr()"> amusement park</label> 
+	  				
+	  				<label  class="pois"><input type="checkbox" ng-model="selectedAttractions.art_gallery"  ng-change="changeSelectAttr()"> art gallery</label>
+	  				
+		  			<label  class="pois"><input  type="checkbox" ng-model="selectedAttractions.poi"  ng-change="changeSelectAttr()"> other</label>
+		  		
+	  			<button  class="my-button" ng-click="showPlaces()">See on Map</button>
 	  		
-  		<button  class="my-button" ng-click="showPlaces()">See on Map</button>
-  		
-  		<p class="line"></p>    
-  		</div>	
-  				
-		
-	</div>
-	<div id="route-holder" >
-		<div id="start">
-				<label for="startSelect"> Route Start </label>
-				<select name="startSelect" id="startSelect" ng-model="selectedOptionStart" ng-change="changeSelectStart()"  > 
+	  			<p class="line"></p>    
+	  		</div>
+  		</div>				
+		<div id="route-holder" >
+			<div id="start">
+				<label for="startSelect">Route Start</label>
+				<select name="startSelect" id="startSelect" ng-model="selectedOptionStart" ng-change="changeSelectStart()"  class="pull-right"> 
 				   <option value="">-Select Start-</option>
 		    		<option ng-repeat="option in data track by option.name" ng-value="option.position" selected="selectedOptionStart == option.position"  >
 		    		{{option.name}}
 		    		</option>
 				</select> 
-		</div>
-		<div id="end">
+			</div>
+			<div id="end">
 				<label for="endSelect"> Route End </label>
-				<select name="endSelect" id="endSelect" ng-model="selectedOptionEnd" ng-change="changeSelectEnd()"> 
-		   <option value="">-Select End-</option>
-		    <option ng-repeat="option in data track by option.id" ng-value="option.position" selected="selectedOptionEnd == option.position"  >
-		    {{option.name}}
-		    </option>
-			</select> 
+				<select class="pull-right" name="endSelect" id="endSelect" ng-model="selectedOptionEnd" ng-change="changeSelectEnd()"> 
+		   			<option value="">-Select End-</option>
+		    		<option ng-repeat="option in data track by option.id" ng-value="option.position" selected="selectedOptionEnd == option.position"  >
+		   				 {{option.name}}
+		   			 </option>
+				</select> 
 				<button ng-click="calcRoute()" class="my-button" >Draw Route</button>
-				<button class="my-button" ng-click="totalTimeMinutes()" ng-click="totalRouteKm()">Get Route info</button>		
+				<button class="my-button pull-right" ng-click="totalTimeMinutes()" ng-click="totalRouteKm()">Get Route info</button>		
+			</div>
+	
+			<p class="line"></p>    
 		</div>
+
+		<div id="route-info" >
+			<p ng-model="totalTimeMinutes">Time Length: {{totalTimeMinutes()}} </p>
+			<p ng-model="totalRouteKm">Route Length: {{totalRouteKm()}}</p>
+			<label>Name route</label>
+				<input type="text" placeholder="Write a name" ng-model="routeName" class="pull-right">
+			
+			<div>
+				<label>Rate route</label>
+					<select class="pull-right" name="rating" id="rating" ng-model="selectedRating" ><option value=""><span span class="glyphicon glyphicon-star"></span></option>
+						<option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
+					</select>
+			</div>
+			<div>
+				<label class="newLine">Save a comment</label>
+				
+				<textarea class="newLine" placeholder="comment here" ng-model="message"></textarea>
+			</div>
 	
-	<p class="line"></p>    
-	</div>
-</form>	
-	<div id="route-info" >
-	 <span ng-model="totalTimeMinutes">Time Length: {{totalTimeMinutes()}} </span>
-		 <span ng-model="totalRouteKm">Route Length: {{totalRouteKm()}}</span>
-		<label>Name route
-		<input type="text" placeholder="write a name" ng-model="routeName" style="color:black">
-		</label>
+			<button class="my-button" ng-click="saveRoute()">Save Route</button>
+			<button class="my-button pull-right" ng-click="discardRoute()">Discard Route</button>
 	
-	<div>
-		<label>Rate route
-			<select name="rating" id="rating" ng-model="selectedRating">
-				<option>1</option>
-				<option>2</option>
-				<option>3</option>
-				<option>4</option>
-				<option>5</option>
-			</select>
-		</label>
-	</div>
-	<div>
-		<label>Save a comment
-		<textarea placeholder="comment here" ng-model="message"></textarea>
-		</label>
-	</div>
-	
-	<button class="my-button" ng-click="saveRoute()">Save Route</button>
-	<button class="my-button" ng-click="discardRoute()">Discard Route</button>
-	
-	</div>
-	
-	<!-- <tt>model = {{selectedOptionEnd}}</tt><br/> -->
-	</div>
+		</div>
+	</form>	
 </div>
-<div class="col-md-8">
+
+<div class="col-md-6 col-xs-12">
 	<div class="map" id="map">{{'map'}}</div>
 	<input id="pac-input" class="controls" type="text" placeholder="Type another city" ng-change="changeInput()"  ng-model="newCity" ng-trim="true">
 </div>	
 
-<div  class="col-md-2 col-sm-2 spaces" >
+<div  class="col-md-3 col-sm-6 col-xs-12 spaces">
 	<button class="my-button" ng-click="getAllRoutes()">GET ALL Routes</button>
-	<button class="my-button" ng-click="getUserRoutes()">SEE MY Routes</button>
+	<button class="my-button pull-right" ng-click="getUserRoutes()">SEE MY Routes</button>
 	<br>
-<div ng-repeat="data in response">
-	<div >
-	<button type="button" class="my-button" ng-click="showAndHideInfo()">{{data.route_name}}</button>
-  <div ng-show="hideInfo">
-    <p><strong>Destination</strong> - {{data.destination}};</p>
-    <p><strong>Rating</strong> - {{data.rating}};<br> 
-    <button class="btn btn-sm" ng-click="downRating(data.rating)">-</button>
-    <button class="btn btn-sm" ng-click="upRating(data.rating)">+</button></p>
-    <p><strong>Comment</strong> - {{data.message}};</p>
-    <p><strong>Waipoints</strong> - {{data.waypoints}}</p>
-  </div>
-  </div>
-  </div>
-	
-
+	<div ng-repeat="data in response">
+		<div>
+			<button type="button" class="my-button" ng-click="showAndHideInfo()">{{data.route_name}}</button>
+  			<div ng-show="hideInfo" id="resut-routes">
+   				 <p><strong>Destination</strong> - {{data.destination}};</p>
+    		 	<p><strong>Rating</strong> - {{data.rating}}
+  			 	<p><strong>Comment</strong> - {{data.message}};</p>
+    		 	<p><strong>Waipoints</strong> - {{data.waypoints}}</p>
+    		 	<div>
+    		 		<button class="my-button" ng-click="infoEdit">Edit route</button>
+    		 	</div>
+    		 	<div>
+    		 	<form name="edit-form">
+    		 		<p><strong>Destination</strong> - <input value="{{data.destination}}"></p>
+    		 		<p><strong>Rating</strong> - {{data.rating}}
+   			 		<button class="my-button pull-right" ng-click="downRating(data.rating)">-</button>
+   					 <button class="my-button pull-right" ng-click="upRating(data.rating)">+</button></p>
+  			 
+  			 		<p><strong>Comment</strong> - <textarea>{{data.message}}</textarea></p>
+    		 		<p><strong>Waipoints</strong> - {{data.waypoints}}</p>
+    		 	</form>
+    		 	</div>
+  			</div>
+  			
+ 		</div>
+  	<p class="line"></p> 
+  	</div>
 </div>
 	
 </div>

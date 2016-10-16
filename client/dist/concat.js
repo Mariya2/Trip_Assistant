@@ -8,10 +8,6 @@ var travelAssistant = angular.module('travelAssistant',['ngRoute'
 	//$locationProvider.hashPrefix('!');   ???
 	
 	$routeProvider
-	.when('/homePage', {
-		templateUrl:"./app/routes/homePage/home/homePage.html",
-		controller:'HomePageController'
-	})
 	.when('/InsidePage/mapApp', {
 		templateUrl:"./app/routes/InsidePage/mapApp.html",
 		controller:'MapCtrl'
@@ -32,12 +28,12 @@ var travelAssistant = angular.module('travelAssistant',['ngRoute'
 		templateUrl:"./app/routes/homePage/edit/userEdit.html",
 		controller:'EditUserController'
 	})
-	.otherwise({redirectTo: '/homePage'})
+	.otherwise({redirectTo: '/homePage/login'})
 }])
 .run(['$rootScope', '$location', 'authentication', function($rootScope, $location, authentication) {
         $rootScope.$on('$routeChangeError', function(ev, current, previous, rejection) {
             if (rejection == 'Unauthorized Access') {
-                $location.path('/');
+                $location.path('/homePage/login');
             }
         });
         
@@ -65,7 +61,7 @@ var travelAssistant = angular.module('travelAssistant',['ngRoute'
 	
 	
 })
-.constant('BASE_URL', 'http://localhost/MAIN_PROJECT/Trip_Project-master09-10/client/index.html#/homePage')
+.constant('BASE_URL', 'http://localhost/MAIN_PROJECT/Trip_Project-master09-10/client/index.html#/homePage/login')
 	
 	
 	
@@ -82,34 +78,6 @@ if(existingCookie){
 	if (isLogged){
 		$scope.
 	}*/
-
-
-/*   .config(function(uiGmapGoogleMapApiProvider) {
-    uiGmapGoogleMapApiProvider.configure({
-        key: 'AIzaSyAg_ZL1c9NXonjqOM9UKwsk43lUXDZ7jYU',
-        v: '3.20', //defaults to latest 3.X anyhow
-        libraries: 'weather,geometry,visualization'
-    });
-})
-
-.controller('geoCtrl', function ($scope, geolocation) {
-    geolocation.getLocation().then(function(data){
-      $scope.coords = {lat:data.coords.latitude, long:data.coords.longitude};
-    });
-});
-*/
-
-/*.controller("someController", function($scope, uiGmapGoogleMapApi) {
-    // Do stuff with your $scope.
-    // Note: Some of the directives require at least something to be defined originally!
-    // e.g. $scope.markers = []
-
-    // uiGmapGoogleMapApi is a promise.
-    // The "then" callback function provides the google.maps object.
-    uiGmapGoogleMapApi.then(function(maps) {
-
-    });
-*/
 
 travelAssistant.factory('authentication', [
             '$http',
@@ -174,8 +142,8 @@ travelAssistant.factory('authentication', [
        }
                 
        function logoutUser() {
+    	   accessToken = '';
                     $cookies.remove(AUTHENTICATION_COOKIE_KEY);
-                    console.log($cookies);
                     $http.defaults.headers.common.Authorization = undefined;
                     identity.removeUserProfile();
                     $location.path('/homePage');
@@ -405,7 +373,6 @@ travelAssistant.controller('MapCtrl', ['$scope', '$rootScope', 'userService', fu
 				for (var type in types) {
 					typesA.push(type)
 				}
-				$scope.typesA = typesA;
 				var requestCurrentLocationPlaces = {
 					    location: geolocate,
 					    radius: '500',
@@ -464,7 +431,6 @@ travelAssistant.controller('MapCtrl', ['$scope', '$rootScope', 'userService', fu
 		
 			endPoint = endPoint.replace('(', "").replace(')', "");
 			start = start.replace('(', "").replace(')', "");
-			console.log(endPoint, start)
 			var wayPoints1 = [];
 			
 			
@@ -596,29 +562,27 @@ travelAssistant.controller('MapCtrl', ['$scope', '$rootScope', 'userService', fu
 				}
 		}
 		$scope.changeSelectStart = function() {
-			
+			console.log(118)
 			console.log($scope.selectedOptionStart);
 			
 		};
 		$scope.changeSelectEnd = function() {
-			
+			console.log(119)
 		
 			console.log($scope.selectedOptionStart);
 		};	
 		
 		$scope.calcRoute = function(geo, $window) {
-			
+			console.log(1111)
 			var start = $scope.selectedOptionStart;
-			
-			
+			$scope.start = start;
+			console.log($scope.start)
 			var endPoint = $scope.selectedOptionEnd;
-			
-			
+			$scope.endPoint = endPoint;
+			console.log(endPoint)
 			endPoint = endPoint.replace('(', "").replace(')', "");
 			start = start.replace('(', "").replace(')', "");
 			var wayPoints1 = [];
-			$scope.endPoint = endPoint;
-			$scope.start = start;
 			
 			$scope.wayPoints1 = wayPoints1;
 			
@@ -731,7 +695,12 @@ travelAssistant.controller('MapCtrl', ['$scope', '$rootScope', 'userService', fu
         
 		var timeLength = 0;
 		var routeLength = 0;
-			
+		
+		
+		
+		
+		
+				
 		
 		$scope.saveRoute = function() {
 			//routeIsCalculated = false;
@@ -857,7 +826,7 @@ travelAssistant.controller('MapCtrl', ['$scope', '$rootScope', 'userService', fu
 			var requestNewCityPlaces = {
 						location: map.getCenter(),
 						radius: '2000',
-						types: $scope.typesA
+						types: ['poi']
 						};
 			service.nearbySearch(requestNewCityPlaces, callback);
 			
@@ -913,7 +882,7 @@ travelAssistant.controller("ContactsController",
 					}).then(function(data){
 						if(data.status == 200) {
 							alert("success");
-							$location.path('/homePage');
+							$location.path('/homePage/login');
 						} else {
 							alert("Not success");
 						}
@@ -972,15 +941,6 @@ travelAssistant.controller("EditUserController",
 	}
 	
 }])
-/**
- * 
- */
-travelAssistant.controller("HomePageController",
-		['$scope', 'userService', '$http',
-		 function HomePageController($scope, userService, $http){
-			
-			
-		}])
 
 travelAssistant.controller("LoginUserController", 
 		['$scope', 'userService', '$http', '$location', 'authentication',
