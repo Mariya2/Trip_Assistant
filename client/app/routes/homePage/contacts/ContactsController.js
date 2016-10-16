@@ -40,7 +40,7 @@ travelAssistant.controller("ContactsController",
 					}).then(function(data){
 						if(data.status == 200) {
 							alert("success");
-							$location.path('/homePage');
+							$location.path('/homePage/login');
 						} else {
 							alert("Not success");
 						}

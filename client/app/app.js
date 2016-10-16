@@ -8,10 +8,6 @@ var travelAssistant = angular.module('travelAssistant',['ngRoute'
 	//$locationProvider.hashPrefix('!');   ???
 	
 	$routeProvider
-	.when('/homePage', {
-		templateUrl:"./app/routes/homePage/home/homePage.html",
-		controller:'HomePageController'
-	})
 	.when('/InsidePage/mapApp', {
 		templateUrl:"./app/routes/InsidePage/mapApp.html",
 		controller:'MapCtrl'
@@ -32,7 +28,7 @@ var travelAssistant = angular.module('travelAssistant',['ngRoute'
 		templateUrl:"./app/routes/homePage/edit/userEdit.html",
 		controller:'EditUserController'
 	})
-	.otherwise({redirectTo: '/homePage'})
+	.otherwise({redirectTo: '/homePage/login'})
 }])
 .run(['$rootScope', '$location', 'authentication', function($rootScope, $location, authentication) {
         $rootScope.$on('$routeChangeError', function(ev, current, previous, rejection) {
@@ -65,7 +61,7 @@ var travelAssistant = angular.module('travelAssistant',['ngRoute'
 	
 	
 })
-.constant('BASE_URL', 'http://localhost/MAIN_PROJECT/Trip_Project-master09-10/client/index.html#/homePage')
+.constant('BASE_URL', 'http://localhost/MAIN_PROJECT/Trip_Project-master09-10/client/index.html#/homePage/login')
 	
 	
 	
@@ -82,31 +78,3 @@ if(existingCookie){
 	if (isLogged){
 		$scope.
 	}*/
-
-
-/*   .config(function(uiGmapGoogleMapApiProvider) {
-    uiGmapGoogleMapApiProvider.configure({
-        key: 'AIzaSyAg_ZL1c9NXonjqOM9UKwsk43lUXDZ7jYU',
-        v: '3.20', //defaults to latest 3.X anyhow
-        libraries: 'weather,geometry,visualization'
-    });
-})
-
-.controller('geoCtrl', function ($scope, geolocation) {
-    geolocation.getLocation().then(function(data){
-      $scope.coords = {lat:data.coords.latitude, long:data.coords.longitude};
-    });
-});
-*/
-
-/*.controller("someController", function($scope, uiGmapGoogleMapApi) {
-    // Do stuff with your $scope.
-    // Note: Some of the directives require at least something to be defined originally!
-    // e.g. $scope.markers = []
-
-    // uiGmapGoogleMapApi is a promise.
-    // The "then" callback function provides the google.maps object.
-    uiGmapGoogleMapApi.then(function(maps) {
-
-    });
-*/

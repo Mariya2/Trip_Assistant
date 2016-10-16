@@ -62,8 +62,8 @@ travelAssistant.factory('authentication', [
        }
                 
        function logoutUser() {
+    	   accessToken = '';
                     $cookies.remove(AUTHENTICATION_COOKIE_KEY);
-                    console.log($cookies);
                     $http.defaults.headers.common.Authorization = undefined;
                     identity.removeUserProfile();
                     $location.path('/homePage');
