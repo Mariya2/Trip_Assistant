@@ -405,6 +405,7 @@ travelAssistant.controller('MapCtrl', ['$scope', '$rootScope', 'userService', fu
 				for (var type in types) {
 					typesA.push(type)
 				}
+				$scope.typesA = typesA;
 				var requestCurrentLocationPlaces = {
 					    location: geolocate,
 					    radius: '500',
@@ -600,6 +601,7 @@ travelAssistant.controller('MapCtrl', ['$scope', '$rootScope', 'userService', fu
 			
 		};
 		$scope.changeSelectEnd = function() {
+			
 		
 			console.log($scope.selectedOptionStart);
 		};	
@@ -614,10 +616,9 @@ travelAssistant.controller('MapCtrl', ['$scope', '$rootScope', 'userService', fu
 			
 			endPoint = endPoint.replace('(', "").replace(')', "");
 			start = start.replace('(', "").replace(')', "");
-			$scope.start = start;
-			$scope.endPoint = endPoint;
-			console.log(endPoint,start)
 			var wayPoints1 = [];
+			$scope.endPoint = endPoint;
+			$scope.start = start;
 			
 			$scope.wayPoints1 = wayPoints1;
 			
@@ -730,12 +731,7 @@ travelAssistant.controller('MapCtrl', ['$scope', '$rootScope', 'userService', fu
         
 		var timeLength = 0;
 		var routeLength = 0;
-		
-		
-		
-		
-		
-				
+			
 		
 		$scope.saveRoute = function() {
 			//routeIsCalculated = false;
@@ -861,7 +857,7 @@ travelAssistant.controller('MapCtrl', ['$scope', '$rootScope', 'userService', fu
 			var requestNewCityPlaces = {
 						location: map.getCenter(),
 						radius: '2000',
-						types: ['poi']
+						types: $scope.typesA
 						};
 			service.nearbySearch(requestNewCityPlaces, callback);
 			
@@ -933,15 +929,6 @@ travelAssistant.controller("ContactsController",
 /**
  * 
  */
-travelAssistant.controller("HomePageController",
-		['$scope', 'userService', '$http',
-		 function HomePageController($scope, userService, $http){
-			
-			
-		}])
-/**
- * 
- */
 travelAssistant.controller("EditUserController",
 		['$scope', 'userService', '$http',
 		 function EditUserController($scope, userService, $http){
@@ -985,6 +972,15 @@ travelAssistant.controller("EditUserController",
 	}
 	
 }])
+/**
+ * 
+ */
+travelAssistant.controller("HomePageController",
+		['$scope', 'userService', '$http',
+		 function HomePageController($scope, userService, $http){
+			
+			
+		}])
 
 travelAssistant.controller("LoginUserController", 
 		['$scope', 'userService', '$http', '$location', 'authentication',

@@ -63,6 +63,7 @@ travelAssistant.controller('MapCtrl', ['$scope', '$rootScope', 'userService', fu
 				for (var type in types) {
 					typesA.push(type)
 				}
+				$scope.typesA = typesA;
 				var requestCurrentLocationPlaces = {
 					    location: geolocate,
 					    radius: '500',
@@ -253,27 +254,29 @@ travelAssistant.controller('MapCtrl', ['$scope', '$rootScope', 'userService', fu
 				}
 		}
 		$scope.changeSelectStart = function() {
-			console.log(118)
+			
 			console.log($scope.selectedOptionStart);
 			
 		};
 		$scope.changeSelectEnd = function() {
-			console.log(119)
+			
 		
 			console.log($scope.selectedOptionStart);
 		};	
 		
 		$scope.calcRoute = function(geo, $window) {
-			console.log(1111)
+			
 			var start = $scope.selectedOptionStart;
-			$scope.start = start;
-			console.log($scope.start)
+			
+			
 			var endPoint = $scope.selectedOptionEnd;
-			$scope.endPoint = endPoint;
-			console.log(endPoint)
+			
+			
 			endPoint = endPoint.replace('(', "").replace(')', "");
 			start = start.replace('(', "").replace(')', "");
 			var wayPoints1 = [];
+			$scope.endPoint = endPoint;
+			$scope.start = start;
 			
 			$scope.wayPoints1 = wayPoints1;
 			
@@ -386,12 +389,7 @@ travelAssistant.controller('MapCtrl', ['$scope', '$rootScope', 'userService', fu
         
 		var timeLength = 0;
 		var routeLength = 0;
-		
-		
-		
-		
-		
-				
+			
 		
 		$scope.saveRoute = function() {
 			//routeIsCalculated = false;
@@ -517,7 +515,7 @@ travelAssistant.controller('MapCtrl', ['$scope', '$rootScope', 'userService', fu
 			var requestNewCityPlaces = {
 						location: map.getCenter(),
 						radius: '2000',
-						types: ['poi']
+						types: $scope.typesA
 						};
 			service.nearbySearch(requestNewCityPlaces, callback);
 			
