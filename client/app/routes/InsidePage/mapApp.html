@@ -1,75 +1,64 @@
 <div id="insidePage" class="container">
 <div class="row">
 
-<div class="col-md-3">
+<div class="col-md-2">
 
-	<div id="floating-panel">
+	<div id="left-panel"  ng-click = "selectionClick()">
 	
-	<div id="selection-panel">
-	<form name="myForm" ng-click = "selectionClick()">
-		<h3>Make a new trip</h3>
-		<br/>
-		<h4>Select points</h4>
-		<label>
-    		<input type="checkbox" ng-model="selectedAttractions.place_of_worship"  ng-change="changeSelectAttr()">
-  		place of worship</label>
-  		<br/>
-		<label>
-    		<input type="checkbox" ng-model="selectedAttractions.museum"  ng-change="changeSelectAttr()">
-  		museum</label>
-  		<br/>
-		<label>
-    		<input type="checkbox" ng-model="selectedAttractions.amusement_park"  ng-change="changeSelectAttr()">
-  		amusement park</label>
-  		<br/>
-		<label>
-    		<input type="checkbox" ng-model="selectedAttractions.art_gallery"  ng-change="changeSelectAttr()">
-  		art gallery</label>
-  		<br/>
-  		<label>
-    		<input type="checkbox" ng-model="selectedAttractions.poi"  ng-change="changeSelectAttr()">
-  		other</label>
-  		<br/>
-		<button ng-click="showPlaces()">Show Places</button>
-		
-		
+
+	<div id="places-holder"  >
 	
-		<label for="startSelect"> Start Point </label>
-		 
-		<select name="startSelect" id="startSelect" ng-model="selectedOptionStart" ng-change="changeSelectStart()"  > 
-		   <option value="">-Select Start-</option>
-		    <option ng-repeat="option in data track by option.name" ng-value="option.position" selected="selectedOptionStart == option.position"  >
-		    	{{option.name}}
-		    </option>
-		</select> 
-		<label for="endSelect"> End Point </label>
-		 
-		<select name="endSelect" id="endSelect" ng-model="selectedOptionEnd" ng-change="changeSelectEnd()"> 
+	<form name="myForm" >		
+		              
+		<h5>Select Places to Visit:</h5>
+		<div id="check-boxes-container" class="squaredThree">
+				<input type="checkbox" ng-model="selectedAttractions.museum"  ng-change="changeSelectAttr()">
+	  			<label for="squaredThree"></label><span for="squaredTwo" class="pois">museum</span>
+	  		
+	    		<input class="squaredThree" type="checkbox" ng-model="selectedAttractions.poi"  ng-change="changeSelectAttr()">
+	  			<label for="squaredThree"></label><span for="squaredTwo" class="pois">other</span>
+	  		
+  		<button  class="my-button" ng-click="showPlaces()">See on Map</button>
+  		
+  		<p class="line"></p>    
+  		</div>	
+  				
+		
+	</div>
+	<div id="route-holder" >
+		<div id="start">
+				<label for="startSelect"> Route Start </label>
+				<select name="startSelect" id="startSelect" ng-model="selectedOptionStart" ng-change="changeSelectStart()"  > 
+				   <option value="">-Select Start-</option>
+		    		<option ng-repeat="option in data track by option.name" ng-value="option.position" selected="selectedOptionStart == option.position"  >
+		    		{{option.name}}
+		    		</option>
+				</select> 
+		</div>
+		<div id="end">
+				<label for="endSelect"> Route End </label>
+				<select name="endSelect" id="endSelect" ng-model="selectedOptionEnd" ng-change="changeSelectEnd()"> 
 		   <option value="">-Select End-</option>
 		    <option ng-repeat="option in data track by option.id" ng-value="option.position" selected="selectedOptionEnd == option.position"  >
 		    {{option.name}}
 		    </option>
-		</select> 
-	</form>
-	<!-- ng-click="calcTimeAndLength()" -->
-
-	<div > 
-		<button ng-click="calcRoute()" ng-click="totalTimeMinutes()" ng-click="totalRouteKm()">See trip</button>
-		 <span ng-model="totalTimeMinutes">Time Length: {{totalTimeMinutes()}} </span>
+			</select> 
+				<button ng-click="calcRoute()" class="my-button" >Draw Route</button>
+				<button class="my-button" ng-click="totalTimeMinutes()" ng-click="totalRouteKm()">Get Route info</button>		
+		</div>
+	
+	<p class="line"></p>    
+	</div>
+</form>	
+	<div id="route-info" >
+	 <span ng-model="totalTimeMinutes">Time Length: {{totalTimeMinutes()}} </span>
 		 <span ng-model="totalRouteKm">Route Length: {{totalRouteKm()}}</span>
-	</div>
-	<div>
-		<label>Trip Name
-		<input type="text" placeholder="Type trip name" ng-model="routeName" style="color:black">
+		<label>Name route
+		<input type="text" placeholder="write a name" ng-model="routeName" style="color:black">
 		</label>
-	</div>
+	
 	<div>
-		<label>Comment
-		<textarea placeholder="make a comment" ng-model="message"></textarea>
-		</label>
-	</div>
-	<div>
-		<label>Rate the trip
+		<label>Rate route
 			<select name="rating" id="rating" ng-model="selectedRating">
 				<option>1</option>
 				<option>2</option>
@@ -79,25 +68,32 @@
 			</select>
 		</label>
 	</div>
-	<button ng-click="saveRoute()">Save Trip</button>
+	<div>
+		<label>Save a comment
+		<textarea placeholder="comment here" ng-model="message"></textarea>
+		</label>
+	</div>
+	
+	<button class="my-button" ng-click="saveRoute()">Save Route</button>
+	<button class="my-button" ng-click="discardRoute()">Discard Route</button>
 	
 	</div>
 	
 	<!-- <tt>model = {{selectedOptionEnd}}</tt><br/> -->
 	</div>
 </div>
-<div class="col-md-6">
+<div class="col-md-8">
 	<div class="map" id="map">{{'map'}}</div>
 	<input id="pac-input" class="controls" type="text" placeholder="Type another city" ng-change="changeInput()"  ng-model="newCity" ng-trim="true">
 </div>	
 
-<div  class="col-md-3 col-sm-3 spaces" >
-	<button ng-click="getAllRoutes()">GET ALL Routes</button>
-	<button ng-click="getUserRoutes()">SEE MY Routes</button>
+<div  class="col-md-2 col-sm-2 spaces" >
+	<button class="my-button" ng-click="getAllRoutes()">GET ALL Routes</button>
+	<button class="my-button" ng-click="getUserRoutes()">SEE MY Routes</button>
 	<br>
 <div ng-repeat="data in response">
 	<div >
-	<button type="button" class="btn btn-default"  ng-click="showAndHideInfo()">{{data.route_name}}</button>
+	<button type="button" class="my-button" ng-click="showAndHideInfo()">{{data.route_name}}</button>
   <div ng-show="hideInfo">
     <p><strong>Destination</strong> - {{data.destination}};</p>
     <p><strong>Rating</strong> - {{data.rating}};<br> 

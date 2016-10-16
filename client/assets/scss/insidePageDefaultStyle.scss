@@ -1,43 +1,138 @@
 @import '_colors.scss';
 @import '_fonts.scss';
+@import '_panel_sizes.scss';
+
 
 
 body {
-	background:  #1531ae;
+	background:  $blue4;
+	font-family: Ailerons-Typeface;
 }
 a {
   text-align: center;
- 
-  position: relative;
+ font-family: Ailerons-Typeface;
+	font-size: 1.5em;
+  
   text-decoration: none;
-  color: rgba(255, 255, 255, 0.2);
-}
 
+}
+#navbar-header{
+	width: $totalWidth;
+	height: $headerHeight;
+	position: absolute;
+	
+	margin-left: -5em;
+	
+
+	#logo {
+	
+				width:$totalWidth*0.2;
+				margin-left: 1em;
+				position:relative;
+				margin-right: 5em;
+				font-weight: normal;
+				color: $blue4;
+				float:left;
+				a{font-size: 2.5em;
+				font-weight: bold;
+				color: $blue4;
+				}
+					
+	}
+	#other-navbar{
+	left: 10em;
+		width:$totalWidth*0.6;
+		display: inline-block;
+		
+		background-color: pink;
+	}
+}
+#picture-background{
+	width: totalWidth;
+	height: $windowHeight;
+	background-image: url("../img/Destinator-Cover.png");
+	background-size: cover;
+	background-repeat: no-repeat;
+
+}
 //start login
 .signin {
-  background-color: #1531ae;
+  background-color: $blue4;
   font-family: 'Montserrat', sans-serif;
   color: #fff;
   font-size: 14px;
   letter-spacing: 1px;
 }
 
+
+#login-background{
+	background-image:url("../img/Destinator-Cover.png");
+	background-repeat:no-repeat;
+	background-size: cover;
+	background-attachment: fixed;
+
+	font-family:Raleway, Open Sans, Droid Sans, Roboto,arial, sans-serif;
+}
+.blurred-bg{
+
+	background-image: url("../img/Destinator-Cover_blur.png");
+	background-repeat:no-repeat;
+	background-size: cover;
+	background-attachment: fixed;
+	
+   
+	.tinted{
+		background-image:linear-gradient(0deg, rgba(255,255,255,.2),rgba(255,255,255,.2)), url("../img/Destinator-Cover_blur.png");
+		
+	}
+	.shaded{
+		background-image: linear-gradient(0deg, rgba(0,0,0,.2),rgba(0,0,0,.2)), url("../img/Destinator-Cover_blur.png");
+	}
+}
+.box{
+	width:500px;
+	height:300px;
+  left: -webkit-calc( 50% - 250px );
+  top:20%;
+	position:absolute;
+	border-radius:5px;
+	box-shadow:0 20px 30px rgba(0,0,0,.6);
+	border:1px solid rgba(255,255,255,.3);
+	padding:20px;
+	text-align: center;
+	box-sizing: border-box;
+	text-shadow:0 1px 1px rgba(0,0,0,.4);
+  
+	&:active{cursor:move}
+}
+h1,h2,a,p, button{
+	color:white;
+	font-weight:100;
+  
+	.tinted &{
+		color:black;
+		text-shadow:0 1px 1px rgba(255,255,255,.2);
+	}
+}
+
+p{ margin: 20px }
 .center {
  margin: 0 auto;
 }
 .login {
   position: relative;
-  height: 560px;
-  width: 405px;
-  margin: auto;
-  padding: 40px 50px;
-  background: url(http://mikeyoungweb.com/img/bg4.jpg) no-repeat   center center #505050;   
-  background-size: cover;
+  left: 13em;
+  top: 2em;
+  height: $halfWindowHeight*1.5;
+  width: $oneThirdWidth*0.75;
+  
+  
+  
   box-shadow: 0px 30px 60px -5px #000;
   
 	h2 {
-	  padding-left: 12px;
-	  font-size: 22px;
+	  padding-left: 0.4em;
+	  font-size: 1.2em;
 	  text-transform: uppercase;
 	  padding-bottom: 5px;
 	  letter-spacing: 2px;
@@ -62,12 +157,12 @@ a {
 	  }
 	
 	form {
-	  padding-top: 30px;
+	 
 	    
 		span {
 		  color: rgba(255, 255, 255, 0.2);
 		  text-transform: uppercase;
-		  font-size: 12px;
+		  font-size: 1em;
 		  opacity: 0.4; 
 		  display: inline-block;
 		  position: relative;
@@ -76,8 +171,9 @@ a {
 		}
 		.text {
 		  border: none;
-		  width: 89%;
-		  padding: 10px 20px;
+		  width: 100%;
+		  mrgin-left: 0px;
+		  padding-left:0px;
 		  display: block;
 		  height: 15px;
 		  border-radius: 20px;
@@ -98,7 +194,21 @@ a {
 		}
 		
 	}
+ #input-holder{
+ width: $oneThirdWidth*0.55;
+ margin-left:1.2em;
+ }
+  button {
   
+  background: $blue4;
+  @extend .my-button;
+  width: $oneThirdWidth*0.55;
+  margin-left:1.2em;
+  }
+  a {
+  color: white;
+  font-size:1em;
+  }
 }
 
 
@@ -245,33 +355,182 @@ hr {
 	}
 }
 /* end section form */
-/*start myMap*/
-/*left*/
+/***************start myMap*************start myMap********start myMap****/
+/*************Map_left_nav_bar***************************************/
 #insidePage {
- button {
- width: 80px;
- height: 80px;
- background-color: #408080;
- position:relative;
- z-index:100;
- }
- #floating-panel{
- width: 150px;
- height:50px;
- background-color: #808080;
- position:relative;
- z-index:99;
- }
+	font-family: Nexa-Light;
+	color: white;
+	margin:0px;
+	padding:0px; 
+	#insidePage.row{
+	margin-left: -15px;
+	margin-right: -15px;
+.col-md-3 {
+	margin:0px;
+	padding:0px; 
+}
+}
+ 
 
-/*end left*/
-/*middle*/
+.my-button
+{
+	transition: all 0.1s;
+	-webkit-transition: all 0.1s;
+	
+	padding: 0;
+	margin: 1em 0em;
+	border-radius: 10px;
+	color: $blue1;
+	text-decoration: none;	
+	border: 1px solid $blue5;
+	background: linear-gradient($blue4, $blue3, $blue4);
+	text-shadow: 0px -2px $blue3;
+	width: 140px;
+	height: 30px;
+	 background-color: $blue4;
+	 border-bottom: 3px solid $blue5;
+	 z-index:100;
+}
+
+
+.my-button:active
+{
+	transform: translate(0px,5px);
+  	-webkit-transform: translate(0px,5px);
+	border-bottom: 0.5px solid;
+}
+ 
+		
+ #left-panel{
+	 width:100%;
+	 height: $windowHeight*0.9;
+	 padding:0px;
+	@extend .metal;
+	 background-color: $blue2;
+	display: inline-block;
+	box-size: border-box;
+	margin:0%;
+	#places-holder{
+		width:100%;
+		height:$windowHeight*0.9*0.5;
+		
+	}
+	#route-holder{
+		width:100%;
+		height:$windowHeight*0.9*0.5;
+		
+	}
+	h4 {
+		text-shadow: 0px 2px 0px rgba(90, 109, 194, .5);
+		font-weight: bold;
+		color: $blue3;
+		
+		}
+	.line {
+		width: 100%;
+		border-top: 4px solid $blue4;
+	  	box-shadow: 0px 1px 0px rgba(16, 37, 134, .5);
+	}
+	h5 {
+		color: $blue1;
+		}
+		#check-boxes-container{
+		width:100%;
+		height: 30em;
+.squaredThree {
+	display: block;
+	float:left;
+	  width: 100%;
+	  position: relative;
+	  left: 0.1em;
+
+	  label {
+	  margin-left: 1em;
+    width: 7%;
+    height: 1.2em;
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: linear-gradient(top, #222 0%, #45484d 100%);
+    border-radius: 4px;
+    box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,.4);
+    &:after {
+      content: '';
+      width: 9px;
+      height: 5px;
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      border: 3px solid #fcfff4;
+      border-top: none;
+      border-right: none;
+      background: transparent;
+      opacity: 0;
+      transform: rotate(-45deg);
+    }
+    &:hover::after {
+      opacity: 0.3;
+    }
+  }
+  .pois{
+  width: 30%;
+  height: 8%;
+  color: $blue1;
+  margin-left: 15%;
+  
+  }
+  input[type=checkbox] {
+    visibility: hidden;
+    &:checked + label:after {
+      opacity: 1;
+    }    
+  }
+}
+}
+ }
+ 
+ #start, #end {
+ margin-left: 1em;
+ color: $blue1;
+ [placeholder] {
+		width:$oneSixthWidth*0.85;
+		height: $headerHeight*0.4;
+		background-color: $blue2;
+		border: 0.01em solid $blue1;
+		padding-left:4%;
+		color: white;
+		font-size: $nav2fontSize*0.9;
+		font-weight: bold;
+	}
+ }
+.metal {
+ 	background-image: 
+ 	
+ 	-webkit-repeating-linear-gradient(left, hsla(229, 83%, 23%, 0) 0%, hsla(229, 83%, 23%, 0)   6%, hsla(229, 83%, 23%, .1) 7.5%),
+    -webkit-repeating-linear-gradient(left, hsla(229, 83%, 23%, 0) 0%, hsla(229, 8%, 32%, 0)   4%, hsla(229, 8%, 32%, .03) 4.5%),
+   -webkit-repeating-linear-gradient(left, hsla(229, 83%, 23%, 0) 0%, hsla(229, 83%, 23%, 0) 1.2%, hsla(229, 83%, 23%, .15) 2.2%),
+    
+    linear-gradient(180deg, hsl(229, 83%, 23%)  0%, 
+    hsl(229, 79%, 29%) 47%, 
+    hsl(229, 79%, 29%) 53%,
+    hsl(229, 83%, 23%)100%);
+
+
+}
+/*************end_Map_left_nav_bar*******end_Map_left_nav_bar**/
+/***middleMAP*******middleMAP****middleMAP****middleMAP*****/
+#map-container{
+	background-color:yellow;
+}
+
 .map {
 	width: 100%;
-	height: 600px;
+	height: $windowHeight*0.9;
 	border: 1px solid black;
-	position:absolute;
- z-index:80;
-	
+	display: inline-block;
+	box-size:border-box;
+	padding: 0px;
 }
 .gm-style-iw * {
   display: block;
@@ -290,6 +549,14 @@ hr {
 
 /*end middle*/
 /*right*/
+#left-navbar{
+ 	width: 100%;
+	height: $oneFourFifthWindowHeight;
+	background-color:pink;
+}
+
+
+
 /*end right*/
 }
 /*end myMap*/
@@ -297,10 +564,11 @@ hr {
 
 
 
+
 /* footer */
 footer {
 	margin-top: 60px;
-	background: $blue2;
+	background: $blue3;
 	padding-bottom: 0.5em;
 	#icons {
 		display: inline-block;

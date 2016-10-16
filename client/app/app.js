@@ -1,10 +1,7 @@
 
 
 var travelAssistant = angular.module('travelAssistant',['ngRoute'                                                    
-    , 'ngCookies'/*,
-    'travelAssistent.routes.insidePage', 
-    'uiGmapGoogleMapApiProvider', 
-    'geolocation' */])
+    , 'ngCookies'])
 
 .config(['$locationProvider', '$routeProvider', 
           function($locationProvider, $routeProvider){

@@ -1,10 +1,7 @@
 
 
 var travelAssistant = angular.module('travelAssistant',['ngRoute'                                                    
-    , 'ngCookies'/*,
-    'travelAssistent.routes.insidePage', 
-    'uiGmapGoogleMapApiProvider', 
-    'geolocation' */])
+    , 'ngCookies'])
 
 .config(['$locationProvider', '$routeProvider', 
           function($locationProvider, $routeProvider){
@@ -141,7 +138,7 @@ travelAssistant.factory('authentication', [
             			}).then(function success(response) {
             				console.log(response);
             				preserveUserData(response.data);
-                             identity.requestUserProfile()
+                            identity.requestUserProfile()
                              
                              return response;
                              
@@ -178,9 +175,15 @@ travelAssistant.factory('authentication', [
                 
        function logoutUser() {
                     $cookies.remove(AUTHENTICATION_COOKIE_KEY);
+                    console.log($cookies);
                     $http.defaults.headers.common.Authorization = undefined;
                     identity.removeUserProfile();
                     $location.path('/homePage');
+                    /*if(isAuthenticated()== true) {
+                    	isAuthenticated()== false;
+                    } else {
+                    	isAuthenticated()== true;
+                    }*/
         }
                 
        function refreshCookie() {
@@ -224,7 +227,7 @@ travelAssistant.factory('identity', [
                 requestUserProfile: function() {
                     var userProfileDeferred = $q.defer();
                     
-                    $http.get(BASE_URL + 'me')
+                    $http.get(BASE_URL)
                         .then(function(response) {
                             currentUser = response.data;
                             deferred.resolve(currentUser);
@@ -256,6 +259,7 @@ travelAssistant.factory('userService', ['$http', '$httpParamSerializerJQLike',
 			}).then(function(response){
 				 /*preserveRouteData(response.data);
                 */
+				
                  return response;
 				/*if(data.status == 200) {
 					alert("success");
@@ -270,35 +274,28 @@ travelAssistant.factory('userService', ['$http', '$httpParamSerializerJQLike',
 		return $http({
 			url: '../server/list.php',
 			method: 'GET',
-			dataType: "json",
-			headers: {'Content-Type': 'application/json'}
-	}).then(function successCallback(response) {
-		$scope.result = response.data;
-		console.log(response);
-	  }, function errorCallback(response) {
-		  $scope.error = response;
+	}).then(function(response) {
+		console.log(response.data);
+		var resultAllRoutes = response.data;
+		return resultAllRoutes;
+	  }, function(response) {
+		  console.log(response.data);
+		  response = 'error';
+		  console.log(response);
 	  });
 	}
 	
-	function getRouteFromDB(user) {
-		
+	function getUserRoutesFromDB() {
 		return $http({
 				url: '../server/getRouteFromDB.php',
-				data: user,
 				method: 'GET',
-				dataType: "json",
-				headers: {'Content-Type': 'application/json'}
 			}).then(function(response){
-				 /*preserveRouteData(response.data);
-                */
-                 return response;
-				/*if(data.status == 200) {
-					alert("success");
-					
-				} else {
-					alert("Not success");
-				}*/
-			})
+				console.log(response.data);
+				var userRoutes = response.data;
+				return userRoutes;
+			}, function(response) {
+   				  $scope.error = response;
+   			});
     }
 	
 	
@@ -317,7 +314,7 @@ travelAssistant.factory('userService', ['$http', '$httpParamSerializerJQLike',
 		
 		getRoutes: getRoutes,
 		
-		getRouteFromDB: getRouteFromDB
+		getUserRoutesFromDB: getUserRoutesFromDB
 		
 		
 		/*loginUser: function(user){
@@ -413,88 +410,58 @@ travelAssistant.controller('MapCtrl', ['$scope', '$rootScope', 'userService', fu
 					    radius: '500',
 					    types: typesA
 					  };
+				console.log(requestCurrentLocationPlaces)
 			var service = new google.maps.places.PlacesService(map);
+				
 			service.nearbySearch(requestCurrentLocationPlaces, callback);
-			 
+				
 			function callback(results, status) {
 				if (status == google.maps.places.PlacesServiceStatus.OK) {
 					for (var i = 0; i < results.length; i++) {
 						var place = results[i];
-						    
+						$scope.place = place;
 						createMarker(results[i]);
 					}
 				}
 			}
-				}
-		
 		}
+		
+	}
 
-		
-	/*	types: ['poi', 'place_of_worship', 'museum', 'amusement_park', 'art_gallery']*/
-		map.setCenter(geolocate);
-		
-        	 
-		var wayPoints = [];
-        $rootScope.wayPoints = wayPoints;
-        
-		function createMarker(place) {
-			var placeLoc = place.geometry.location;
-			var marker = new google.maps.Marker({
-				      map: map,
-				      position: placeLoc,
-				      name: place.name,
-				      id: place.place_id,
-				      icon: image2,
-				   });
-			//map add event listener click / take latLng na eventa/ create marker at click
-			var infowindow = new google.maps.InfoWindow({
-			    position: placeLoc,
-			    content: place.name,
-			    maxWidth: 50 
-			})
-			marker.addListener('click', function() {
-			    infowindow.open(map, marker);
-			});
-			$scope.marker = marker;
-			marker.addListener('dblclick', function selectWayPointsOne(e) {
-				wayPoints.push(marker)
-			}, false); 
+		$scope.selectionClick = function () {
+			
+			if($scope.wayPoints.length>1){
+				$scope.data =  [];
+					for (var int = 0; int < $scope.wayPoints.length; int++) {
+						var item = $scope.wayPoints[int];
+						
+						var id = item.id;
+						var name = item.name;
+						var position = item.position;
+						$scope.data.push({id:item.id, name:item.name,  position: position})
+						
+					 }
+				}
 		}
 		$scope.changeSelectStart = function() {
-			console.warn($scope.selectedOptionStart);
+		
+			console.log($scope.selectedOptionStart);
+			
 		};
 		$scope.changeSelectEnd = function() {
-			console.warn($scope.selectedOptionEnd);
+		
+			console.log($scope.selectedOptionStart);
 		};	
-		var timeLength = 0;
-		var routeLength = 0;
-		
-		$scope.selectionClick = function () {
-			if(wayPoints.length>1){
-			$scope.data =  [];
-				for (var int = 0; int < wayPoints.length; int++) {
-					var item = wayPoints[int];
-					var id = item.id;
-					var name = item.name;
-					var position = item.position;
-					$scope.data.push({id:item.id, name:item.name,  position: position})
-					
-				 }
-			}
-		}
-		var directionsService = new google.maps.DirectionsService();
-		$scope.directionsService =  directionsService;
-		
-		var directionsDisplay = new google.maps.DirectionsRenderer();
-		$scope.directionsDisplay = directionsDisplay;
-		directionsDisplay.setMap(map);
 		
 		$scope.calcRoute = function(geo, $window) {
+		
 			var start = $scope.selectedOptionStart;
 			$scope.start = start;
-			var end1 = $scope.selectedOptionEnd;
-			$scope.end1 = end1;
-			end1 = end1.replace('(', "").replace(')', "");
+			
+			var endPoint = $scope.selectedOptionEnd;
+			$scope.endPoint = endPoint;
+		
+			endPoint = endPoint.replace('(', "").replace(')', "");
 			start = start.replace('(', "").replace(')', "");
 			var wayPoints1 = [];
 			
@@ -506,36 +473,44 @@ travelAssistant.controller('MapCtrl', ['$scope', '$rootScope', 'userService', fu
 					stopover: true
 					});
 				}
-				console.log(wayPoints1)
+				$scope.wayPoints1 = wayPoints1;
+				
 				var wayPoints2 = '';
 				for (var int = 0; int < wayPoints1.length-1; int++) {
 					var a = wayPoints1[int].location+', ';
 					a += wayPoints1[int+1].location;
 				}	
 				wayPoints2 = a
-				console.log(wayPoints2)
-				
+			
 				$scope.wayPoints2 = wayPoints2; 
 				
 			var requestRoute = {
 						/*origin: startPosLat1+', '+ startPosLng1,*/
-						origin: start,
-						destination: end1,
-						waypoints: wayPoints1,
+						origin: $scope.start,
+						destination: $scope.endPoint,
+						waypoints: $scope.wayPoints1,
 						optimizeWaypoints: true,
 						unitSystem: google.maps.UnitSystem.METRIC,
 						travelMode: 'WALKING'
 						};
-		
+			console.log(requestRoute)
 			var route = null;
+			//var routeIsCalculated = false;
+			var directionsService = new google.maps.DirectionsService();
+			$scope.directionsService =  directionsService;
+			console.log(directionsService)
+			var directionsDisplay = new google.maps.DirectionsRenderer();
+			$scope.directionsDisplay = directionsDisplay;
+			directionsDisplay.setMap(map);
+			
 			directionsService.route(requestRoute, function(result, status) {
-				console.log(requestRoute)
+				console.log( status)
 				if (status == google.maps.DirectionsStatus.OK) {
 					directionsDisplay.setDirections(result);
 					route = result.routes[0];
-					//$scope.route = route
-					//console.log($scope.route) //save Route Func
-						
+					$scope.route = route
+					console.log($scope.route) 
+					//routeIsCalculated = true;
 					
 						for (var i = 0; i < route.legs.length; i++) {
 							var routeSegment = i + 1;
@@ -564,25 +539,216 @@ travelAssistant.controller('MapCtrl', ['$scope', '$rootScope', 'userService', fu
 			});
 		}
 		
+	/*	types: ['poi', 'place_of_worship', 'museum', 'amusement_park', 'art_gallery']*/
+		map.setCenter(geolocate);
 		
+        	 
+		var wayPoints = [];
+        $scope.wayPoints = wayPoints;
+       
+        
+		function createMarker() {
+			var placeLoc = $scope.place.geometry.location;
+			
+			var marker = new google.maps.Marker({
+				      map: map,
+				      position: placeLoc,
+				      name: $scope.place.name,
+				      id: $scope.place.place_id,
+				      icon: image2,
+				   });
+		
+			//map add event listener click / take latLng na eventa/ create marker at click
+			var infowindow = new google.maps.InfoWindow({
+			    position: placeLoc,
+			    content:  $scope.place.name,
+			    maxWidth: 50 
+			})
+			marker.addListener('click', function() {
+			    infowindow.open(map, marker);
+			  
+			});
+			$scope.marker = marker;
+			marker.addListener('dblclick', function selectWayPointsOne(e) {
+				$scope.wayPoints.push(marker)
+				
+			}, false); 
+		}
+        
+		var timeLength = 0;
+		var routeLength = 0;
+		
+	$scope.selectionClick = function () {
+			
+			if($scope.wayPoints.length>1){
+				$scope.data =  [];
+					for (var int = 0; int < $scope.wayPoints.length; int++) {
+						var item = $scope.wayPoints[int];
+						
+						var id = item.id;
+						var name = item.name;
+						var position = item.position;
+						$scope.data.push({id:item.id, name:item.name,  position: position})
+						
+					 }
+				}
+		}
+		$scope.changeSelectStart = function() {
+			console.log(118)
+			console.log($scope.selectedOptionStart);
+			
+		};
+		$scope.changeSelectEnd = function() {
+			console.log(119)
+		
+			console.log($scope.selectedOptionStart);
+		};	
+		
+		$scope.calcRoute = function(geo, $window) {
+			console.log(1111)
+			var start = $scope.selectedOptionStart;
+			$scope.start = start;
+			console.log($scope.start)
+			var endPoint = $scope.selectedOptionEnd;
+			$scope.endPoint = endPoint;
+			console.log(endPoint)
+			endPoint = endPoint.replace('(', "").replace(')', "");
+			start = start.replace('(', "").replace(')', "");
+			var wayPoints1 = [];
+			
+			$scope.wayPoints1 = wayPoints1;
+			
+				for (var int = 0; int < wayPoints.length; int++) {
+					wayPoints1.push({
+					location: (wayPoints[int].position+'').replace('(', "").replace(')', ""),
+					stopover: true
+					});
+				}
+				console.log(wayPoints1)
+				var wayPoints2 = '';
+				for (var int = 0; int < wayPoints1.length-1; int++) {
+					var a = wayPoints1[int].location+', ';
+					a += wayPoints1[int+1].location;
+				}	
+				wayPoints2 = a
+				$scope.wayPoints2 = wayPoints2; 
+				
+			var requestRoute = {
+						/*origin: startPosLat1+', '+ startPosLng1,*/
+						origin: $scope.start,
+						destination: $scope.endPoint,
+						waypoints: $scope.wayPoints1,
+						optimizeWaypoints: true,
+						unitSystem: google.maps.UnitSystem.METRIC,
+						travelMode: 'WALKING'
+						};
+			console.log(requestRoute)
+			var route = null;
+			//var routeIsCalculated = false;
+			var directionsService = new google.maps.DirectionsService();
+			$scope.directionsService =  directionsService;
+			console.log(directionsService)
+			var directionsDisplay = new google.maps.DirectionsRenderer();
+			$scope.directionsDisplay = directionsDisplay;
+			directionsDisplay.setMap(map);
+			
+			directionsService.route(requestRoute, function(result, status) {
+				console.log( status)
+				if (status == google.maps.DirectionsStatus.OK) {
+					directionsDisplay.setDirections(result);
+					route = result.routes[0];
+					$scope.route = route
+					console.log($scope.route) 
+					//routeIsCalculated = true;
+					
+						for (var i = 0; i < route.legs.length; i++) {
+							var routeSegment = i + 1;
+							timeLength += route.legs[i].distance.value;
+							routeLength += route.legs[i].duration.value;
+						}
+						
+						$scope.timeLength = timeLength;
+						$scope.routeLength = routeLength;
+						$scope.totalTimeMinutes = function() {
+							var time = 0;
+							if (timeLength/60 < 60) {
+								time = Math.floor(timeLength/60) + "min";
+							} else if (timeLength/60 > 60) {
+								time = Math.floor(timeLength/60) + "h." + " " + timeLength%60 + "min"
+							}
+							return time;
+						};
+						
+						var totalRouteKm;
+						$scope.totalRouteKm = function() {
+							return routeLength/1000 + "km";
+						};
+						
+					}
+			});
+		}
+		
+	/*	types: ['poi', 'place_of_worship', 'museum', 'amusement_park', 'art_gallery']*/
+		map.setCenter(geolocate);
+		
+        	 
+		var wayPoints = [];
+        $scope.wayPoints = wayPoints;
+       
+        
+		function createMarker() {
+			var placeLoc = $scope.place.geometry.location;
+			 console.log($scope.place.geometry.location)
+			  console.log($scope.place.name)
+			var marker = new google.maps.Marker({
+				      map: map,
+				      position: placeLoc,
+				      name: $scope.place.name,
+				      id: $scope.place.place_id,
+				      icon: image2,
+				   });
+			 console.log(marker)
+			//map add event listener click / take latLng na eventa/ create marker at click
+			var infowindow = new google.maps.InfoWindow({
+			    position: placeLoc,
+			    content:  $scope.place.name,
+			    maxWidth: 50 
+			})
+			marker.addListener('click', function() {
+			    infowindow.open(map, marker);
+			    console.log(infowindow)
+			});
+			$scope.marker = marker;
+			marker.addListener('dblclick', function selectWayPointsOne(e) {
+				$scope.wayPoints.push(marker)
+				
+			}, false); 
+		}
+        
+		var timeLength = 0;
+		var routeLength = 0;
+		
+		
+		
+		
+		
+				
 		
 		$scope.saveRoute = function() {
-			/*console.log($scope.route)//Write here the ajax request to save the route to tha DB
-*/			
-			
+			//routeIsCalculated = false;
 				var user = '1'/*$scope.user.name*/;
 				$scope.start = $scope.start.replace('(', "").replace(')', "");
-				$scope.end1 = $scope.end1.replace('(', "").replace(')', "");
-				
+				$scope.endPoint = $scope.endPoint.replace('(', "").replace(')', "");
 				var route = {
-					user: user,
 					origin: $scope.start,
-					destination: $scope.end1,
+					destination: $scope.endPoint,
 					waypoints: $scope.wayPoints2,
 					optimizeWaypoints: true,
-					unitSystem: google.maps.UnitSystem.METRIC,
-					travelMode: 'WALKING'
-				};
+					travelMode: 'WALKING',
+					message: $scope.message,
+					routeName: $scope.routeName,
+					rating: $scope.selectedRating
+					};
 						
 				userService.registerRoute(route)
 				.then(function(response){
@@ -593,12 +759,47 @@ travelAssistant.controller('MapCtrl', ['$scope', '$rootScope', 'userService', fu
 		$scope.getAllRoutes = function() {
 			userService.getRoutes()
 			.then(function(response){
-				console.log('success');
-				console.log(response);
+				if (response != 'error') {
+					$scope.response = response;
+				}
+			});
+		}
+		$scope.getUserRoutes = function() {
+			userService.getUserRoutesFromDB()
+			.then(function(response){
+				if (response != 'error') {
+					$scope.response = response;
+				}
 			});
 		}
 		
 		
+		$scope.hideInfo = false;
+		$scope.showAndHideInfo = showAndHideInfo;
+		function showAndHideInfo(){
+			if ($scope.hideInfo == false) {
+               
+                $scope.hideInfo = true;
+            } else {
+                $scope.hideInfo = false;
+            }
+		}
+		
+	
+		$scope.upRating = upRating;
+		$scope.downRating = downRating;
+		
+		function upRating(ratingChange) {
+			if (ratingChange < 5) {
+				ratingChange++; // TODO: save
+			}
+		}
+
+        function downRating(ratingChange) {
+            if (ratingChange > 0) {
+            	ratingChange--; // TODO: save
+            }
+        }
 		
 		var input = document.getElementById('pac-input');
 		var searchBox = new google.maps.places.SearchBox(input);
@@ -669,7 +870,7 @@ travelAssistant.controller('MapCtrl', ['$scope', '$rootScope', 'userService', fu
 
 	}
 }]);
-  
+ 
 
 /**
  * var formSection = document.getElementById("form");
