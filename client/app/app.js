@@ -1,7 +1,8 @@
 
 
 var travelAssistant = angular.module('travelAssistant',['ngRoute'                                                    
-    , 'ngCookies'])
+    , 'ngCookies'
+    ])
 
 .config(['$locationProvider', '$routeProvider', 
           function($locationProvider, $routeProvider){
@@ -33,48 +34,37 @@ var travelAssistant = angular.module('travelAssistant',['ngRoute'
 .run(['$rootScope', '$location', 'authentication', function($rootScope, $location, authentication) {
         $rootScope.$on('$routeChangeError', function(ev, current, previous, rejection) {
             if (rejection == 'Unauthorized Access') {
-                $location.path('/');
+                $location.path('/homePage/login');
             }
         });
         
         authentication.refreshCookie();
     }])
-.controller('PageController', function($rootScope, $scope, $cookies, authentication, identity) {
-	/*$scope.log = "Log In";*/
+.controller('PageController', function($rootScope, $scope, $cookies, authentication, identity, $timeout, $location) {
+	$scope.authentication = authentication;
+	
 	if(authentication.isAuthenticated()){
-		$liacation.path('/InsidePage/mapApp')
-	}
-	
-	
-	$scope.logout = function(){
-		
-	/*	authentication.isAuthenticated = false;*/
-		authentication.logoutUser()
+		$location.path('/InsidePage/mapApp')
 	}
 		
 	identity.getCurrentUser()
 		.then(function(user){
-	
 			$scope.currentUser = user;
-			
 		});
 	
+	$scope.logout = function(){
+		authentication.logoutUser().then(function(){
+			$scope.alertMessage ='Success Log OUT';
+			$scope.alertStyleM='alert-success';
+			polling_int=2000;
+			var poll1 = function() {
+				$scope.alertStyleM='';
+			};
+			$timeout(poll1, polling_int);
+			$rootScope.flag = false;
+		});
+		
+	}
 	
 })
-.constant('BASE_URL', 'http://localhost/MAIN_PROJECT/Trip_Project-master09-10/client/index.html#/homePage/login')
-	
-	
-	
-	
-/*var existingCookie = $cookies.get('my-cookie');
-if(existingCookie){
-	console.log('FROM COOKIE');
-} else {
-	$cookies.put('my-cookie', 'new Cookie');
-}*/
-	/*$scope.changeState = function(){
-		$scope.hidden = !$scope.hidden;
-	}
-	if (isLogged){
-		$scope.
-	}*/
+.constant('BASE_URL', 'http://localhost/trip/client/#/homePage/login')

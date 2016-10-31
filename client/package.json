@@ -1,17 +1,17 @@
 {
-  "name": "nnn",
+  "name": "npmmm",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "gulpfile.js",
   "dependencies": {
     "angular": "^1.5.8",
-    "angular-animate": "^1.5.8",
     "angular-cookies": "^1.5.8",
-    "angular-resource": "^1.5.8",
     "angular-route": "^1.5.8",
     "bootstrap": "^3.3.7",
     "font-awesome": "^4.6.3",
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.0",
+    "gulp-watch": "^4.3.10",
     "jquery": "^3.1.1",
-    "toastr": "^2.1.2"
   },
   "devDependencies": {
     "gulp": "^3.9.1",

@@ -1,18 +1,21 @@
-<div  id="login-background">
-	<div class="row  container login-form">
- 		
- 		<form class=" login box blurred-bg tinted" name="loginForm" method="POST" ng-submit="loginForm.$valid && login(sendAjax)" novalidate>
-    		<h2 class="active"><a ng-href="#/homePage/login"> sign in </a></h2>
+<div  id="login-background" class="  container col-md-12">
 
-  			<h2 class="nonactive"><a ng-href="#/homePage/signUp">  sign up </a></h2>
+	<div class="login-form relativeClass">
+ 		<div class={{alertStyle}}> 
+  			{{alertMsg}}
+		</div>
+ 		<form class=" login box blurred-bg tinted" name="loginForm" method="POST" ng-submit="loginForm.$valid && login(sendAjax)" novalidate>
+    		<h2 id="upper-link-one" class="text active"><a ng-href="#/homePage/login"> sign in </a></h2>
+
+  			<h2 id="upper-link-two" class=" text nonactive"><a ng-href="#/homePage/signUp">  sign up </a></h2>
     		<div id="input-holder">
-	    		<input type="text" class="text" name="username" required minlength="4" maxlength="24" ng-model="user.name">
-	    		<span>Username</span>
+	    		<input type="text" class="text" name="username" placeholder="&nbsp; type username" required minlength="4" maxlength="24" ng-model="user.name">
+	    		
 	    		<br>
 	    
 	   			<br>
-	  			<input type="password" class="text" name="password"  required minlength="6" maxlength="24" ng-model="user.password">
-	   			<span>password</span>
+	  			<input type="password" class="text" name="password" placeholder="&nbsp; type password " required minlength="6" maxlength="24" ng-model="user.password">
+	   			
 	    		</div>
     		<br>
 
@@ -22,15 +25,8 @@
     			
   			  <hr>
 
-    		<a ng-href="#/homePage/:id/edit">Forgot Password?</a>
+    		
   			
   		</form>
 	</div>
 </div>
-<!-- <div ng-if="isLogged">
-        you are logged in
-    </div>
-    <div ng-if="failCount">
-        failed attempts {{failCount}}
-    </div>
-</div> -->

@@ -1,8 +1,9 @@
 <?php
 session_start();
 
-if(empty($_SESSION['user'])){
+if(empty($_SESSION['infoUser'])){
 	header("HTTP/1.0 401 Unauthorized");
+	die;
 }
 
 if(isset($_SERVER["CONTENT_TYPE"]) && strpos($_SERVER["CONTENT_TYPE"], "application/json") !== false) {

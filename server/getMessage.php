@@ -1,8 +1,9 @@
 <?php
 session_start();
 
-if(empty($_SESSION['user'])){
+if(empty($_SESSION['infoUser'])){
 	header("HTTP/1.0 401 Unauthorized");
+	die;
 }
 
 if(isset($_SERVER["CONTENT_TYPE"]) && strpos($_SERVER["CONTENT_TYPE"], "application/json") !== false) {
@@ -13,16 +14,6 @@ $user = empty($_POST['name']) ? '': $_POST['name'];
 $message = empty($_POST['message']) ? '': $_POST['message'];
 $email = empty($_POST['email']) ? '': $_POST['email'];
 $people = [[$user, $email, $message]];
-
-/* $key = isset($_POST['key']) ? $_POST['key'] : null;
-if (empty($key)) {
-	$_SESSION['list'][] = $people;
-} else {
-	$_SESSION['list'][$key] = $people;
-} */
-
-/* $people = [['aaa', 'aaa', "aaa"]]; */
-
 
 require_once 'db_settings.php';
 

@@ -1,6 +1,8 @@
 <div class="container-fluid" id="insidePage">
-<div class="row">
-
+<div class="row relativeClass">
+ <div class={{alertStyle}}> 
+  			{{alertMsg}}
+</div>
 <div class="col-md-3 col-sm-6 col-xs-12"  id="left-panel" ng-click = "selectionClick()">
 	<form name="myForm">
 		<div id="places-holder">      
@@ -64,7 +66,7 @@
 				<textarea class="newLine" placeholder="comment here" ng-model="message"></textarea>
 			</div>
 	
-			<button class="my-button" ng-click="saveRoute()">Save Route</button>
+			<button class="my-button" ng-click="saveRoute(registerRoute)">Save Route</button>
 			<button class="my-button pull-right" ng-click="discardRoute()">Discard Route</button>
 	
 		</div>
@@ -78,30 +80,18 @@
 
 <div  class="col-md-3 col-sm-6 col-xs-12 spaces">
 	<button class="my-button" ng-click="getAllRoutes()">GET ALL Routes</button>
-	<button class="my-button pull-right" ng-click="getUserRoutes()">SEE MY Routes</button>
+	<button class="my-button pull-right" ng-click="getUserRoutes()" >SEE MY Routes</button>
 	<br>
-	<div ng-repeat="data in response">
-		<div>
-			<button type="button" class="my-button" ng-click="showAndHideInfo()">{{data.route_name}}</button>
-  			<div ng-show="hideInfo" id="resut-routes">
-   				 <p><strong>Destination</strong> - {{data.destination}};</p>
-    		 	<p><strong>Rating</strong> - {{data.rating}}
-  			 	<p><strong>Comment</strong> - {{data.message}};</p>
-    		 	<p><strong>Waipoints</strong> - {{data.waypoints}}</p>
-    		 	<div>
-    		 		<button class="my-button" ng-click="infoEdit">Edit route</button>
-    		 	</div>
-    		 	<div>
-    		 	<form name="edit-form">
-    		 		<p><strong>Destination</strong> - <input value="{{data.destination}}"></p>
-    		 		<p><strong>Rating</strong> - {{data.rating}}
-   			 		<button class="my-button pull-right" ng-click="downRating(data.rating)">-</button>
-   					 <button class="my-button pull-right" ng-click="upRating(data.rating)">+</button></p>
-  			 
-  			 		<p><strong>Comment</strong> - <textarea>{{data.message}}</textarea></p>
-    		 		<p><strong>Waipoints</strong> - {{data.waypoints}}</p>
-    		 	</form>
-    		 	</div>
+	<div ng-repeat="data in response track by $index">
+		<div ng-click="changeData($index)" ng-click="drawSavedRoute()">
+			<button  ng-click="data.flag = !data.flag"  type="button" class="my-button" >{{data.route_name}}</button>
+  			<div ng-show="data.flag" ng-click="drawSavedRoute()" >
+  				<p class="routeInfoStyle" ng-hide="!data.flag"><strong><span class="infoTitle">Rating: </span></strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{data.rating}}
+  			 	<p class="routeInfoStyle" ng-hide="!data.flag"><strong><span class="infoTitle">Comment: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong> {{data.message}};</p>
+   				<p class="routeInfoStyle" ng-hide="!data.flag" ng-model="data.origin" ng-click="changeData()"><strong><span class="infoTitle">Origin coords: </span></strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{data.origin}};</p>
+   				<p class="routeInfoStyle" ng-hide="!data.flag" ng-model="data.destination" ng-click="changeData()"><strong><span class="infoTitle">Destination coords:</span></strong> &nbsp; {{data.destination}};</p>
+    		 
+    		 	<p class="routeInfoStyle" ng-hide="!data.flag" ng-model="data.waypoints" ng-click="changeData()"><strong><span class="infoTitle">Waypoints coords:</span></strong> &nbsp; {{data.waypoints}}</p>
   			</div>
   			
  		</div>

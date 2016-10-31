@@ -1,11 +1,8 @@
 
 travelAssistant.controller("LoginUserController", 
-		['$scope', 'userService', '$http', '$location', 'authentication',
-		 function LoginUserController($scope, userService, $http, $location, authentication){
-	console.log(authentication.isAuthenticated());
-	if(authentication.isAuthenticated()) {
-		$location.path('/InsidePage/mapApp');
-	}
+		['$scope', 'userService', '$http', '$location', 'authentication', '$timeout', '$rootScope',
+		 function LoginUserController($scope, userService, $http, $location, authentication, $timeout, $rootScope){
+	
 	
 	$scope.user={};
 	
@@ -19,11 +16,34 @@ travelAssistant.controller("LoginUserController",
 		};
 		authentication.sendAjax(data)
 		.then(function(loggedInUser){
-			console.log(data);
-			
-			$location.path('/InsidePage/mapApp');
-		});
-	};
-		
+			$scope.alertMsg ='Success Sign In';
+			$scope.alertStyle = 'alert-success';
+			polling_interval=2000;
+			var poll = function() {
+				$scope.alertStyle = '';
+				$location.path('/InsidePage/mapApp');
+				$rootScope.flag = true;
+				console.log($rootScope.flag)
+			};
+			 $timeout(poll, polling_interval);
+			 
+			}, function(){
+				$scope.alertMsg ='Ivalid name or password';
+				$scope.alertStyle = 'alert-failed';
+				polling_interval=2000;
+				var poll = function() {
+					$scope.alertStyle = '';
+				};
+				$timeout(poll, polling_interval);
+				$rootScope.flag = false;
+				console.log($rootScope.flag)
+			}
+		);
+	}
+
+	$scope.dataUser = $scope.user;
 	$scope.user={};
-}])
+
+	$scope.authentication = authentication;
+	}
+])

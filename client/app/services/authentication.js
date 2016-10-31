@@ -24,14 +24,14 @@ travelAssistant.factory('authentication', [
             				dataType: "json",
             				headers: {'Content-Type': 'application/json'}
             			}).then(function success(response) {
-            				console.log(response);
+
             				preserveUserData(response.data);
                             identity.requestUserProfile()
                              
                              return response;
                              
             			  }, function error(response) {
-            			    response = 'error';
+            			    response = 'error';   
             			    return response;
             			  })
         }
@@ -67,14 +67,10 @@ travelAssistant.factory('authentication', [
                     $http.defaults.headers.common.Authorization = undefined;
                     identity.removeUserProfile();
                     $location.path('/homePage');
-                    /*if(isAuthenticated()== true) {
-                    	isAuthenticated()== false;
-                    } else {
-                    	isAuthenticated()== true;
-                    }*/
         }
                 
        function refreshCookie() {
+    	   			$rootScope.flag = false;
                     if (isAuthenticated()) {
                         $http.defaults.headers.common.Authorization = 'Bearer ' + $cookies.get(AUTHENTICATION_COOKIE_KEY);
                         identity.requestUserProfile();

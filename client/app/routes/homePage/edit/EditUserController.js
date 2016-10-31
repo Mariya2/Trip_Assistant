@@ -1,17 +1,8 @@
-/**
- * 
- */
 travelAssistant.controller("EditUserController",
 		['$scope', 'userService', '$http',
 		 function EditUserController($scope, userService, $http){
-	/*$scope.users = userService.getUserById($routeParams.id);
-	$scope.userId = $routeParams.id;
-	$scope.update = function() {
-		userService.updateById($routeParams.id, $scope.users);
-		$location.url('/homePage/' + $routeParams.id);
-	}*/
+			
 	$scope.makeNewPass = function(user) {
-		/*$location.url('/homePage/' + $routeParams.id);*/
 		
 		var user = $scope.user.name;
 		var pass = $scope.user.password;

@@ -1,15 +1,15 @@
 <?php
 session_start();
 
-if(empty($_SESSION['user'])){
+if(empty($_SESSION['infoUser'])){
 	header("HTTP/1.0 401 Unauthorized");
+	die;
 }
 
 if(isset($_SERVER["CONTENT_TYPE"]) && strpos($_SERVER["CONTENT_TYPE"], "application/json") !== false) {
 	$_GET = array_merge($_GET, (array) json_decode(trim(file_get_contents('php://input')), true));
 }
 $user = $_SESSION['infoUser'][0]['id'];
-/* $id= isset($_GET['userId'])?$_GET['userId']: ''; */
 
 require_once 'db_settings.php';
 

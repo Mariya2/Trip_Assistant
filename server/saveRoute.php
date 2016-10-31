@@ -2,15 +2,15 @@
 
 session_start();
 
-if(empty($_SESSION['user'])){
+if(empty($_SESSION['infoUser'])){
 	header("HTTP/1.0 401 Unauthorized");
+	die;
 }
 
 if(isset($_SERVER["CONTENT_TYPE"]) && strpos($_SERVER["CONTENT_TYPE"], "application/json") !== false) {
     $_POST = array_merge($_POST, (array) json_decode(trim(file_get_contents('php://input')), true));
 }
 
-//$userId = empty($_SESSION['user']) ? '': $_SESSION['user'];
 $userId = $_SESSION['infoUser'][0]['id'];
 $origin = empty($_POST['origin']) ? '': $_POST['origin'];
 $destination = empty($_POST['destination']) ? '': $_POST['destination'];

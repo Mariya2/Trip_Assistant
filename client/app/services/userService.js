@@ -11,24 +11,18 @@ travelAssistant.factory('userService', ['$http', '$httpParamSerializerJQLike',
 	function registerRoute(route) {
 	
 		return $http({
-				url: '../server/saveRoute.php',
-				data: route,
-				method: 'POST',
-				dataType: "json",
-				headers: {'Content-Type': 'application/json'}
-			}).then(function(response){
-				 /*preserveRouteData(response.data);
-                */
-				
-                 return response;
-				/*if(data.status == 200) {
-					alert("success");
-					
-				} else {
-					alert("Not success");
-				}*/
-			})
-    }
+		    url: '../server/saveRoute.php',
+		    data: route,
+		    method: 'POST',
+		    dataType: "json",
+		    headers: {'Content-Type': 'application/json'}
+		   }).then(function success(response) {
+			   return response;
+		    }, function error(response) { 
+		    	response = 'error'; 
+		        return response;
+	    });
+	};
 	
 	function getRoutes(){
 		return $http({

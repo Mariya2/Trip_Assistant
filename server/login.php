@@ -9,8 +9,8 @@ require_once 'db_settings.php';
 $user = empty($_POST['name']) ? '': $_POST['name'];
 $pass = empty($_POST['password']) ? '': $_POST['password'];
 
-/* $user = 'hhhhhh';
-$pass = 'hhhhhh'; */
+/* $user = '123456';
+$pass = '123456'; */ 
 
 $people = [[$user, $pass]]; 
 
@@ -27,10 +27,9 @@ $statement -> execute([
 ]);
 
 $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-
-if(isset($result)){
+/*if(isset($result)){
 	$_SESSION['infoUser'] = $result;
-}
+} */
 
 if (empty($result)) {
 	$response = [
@@ -44,8 +43,7 @@ if (empty($result)) {
 			'success' => true,
 			'error' => ''
 	];
-	$_SESSION['user'] = $user;
-	
+	$_SESSION['infoUser'] = $result;
 }
-/* var_dump($_SESSION['infoUser'][0]['id']); */
+
 echo json_encode($response);
